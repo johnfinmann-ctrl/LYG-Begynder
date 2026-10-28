@@ -1,0 +1,14 @@
+LYG GolfStart – integrationspakke v1.1
+
+1. Kopier golfstart-widget.js og golfstart-chat.html til samme mappe på hjemmesiden/PWA’en.
+2. Indsæt lige før </body> i eksisterende index.html:
+
+<script src="./golfstart-widget.js" defer></script>
+
+3. Udgiv og test på både telefon og computer.
+4. Hvis PWA’en har en service worker med cacheliste, så tilføj de to filer og opdater cacheversionsnummeret.
+5. Kontrollér at knappen ikke dækker vigtig bundnavigation på mobil. Justér bottom i CSS om nødvendigt.
+
+VIGTIGT: Denne guide er regelbaseret, ikke en AI-model. Den gemmer ingen spørgsmål på server og sender ikke spørgsmål til en AI-udbyder. Indhold og aktuelle priser/holdtider bør gennemgås af klubbens ansvarlige før offentliggørelse.
+
+Den eksisterende app er IKKE ændret af denne pakke.

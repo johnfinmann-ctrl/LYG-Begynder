@@ -1,0 +1,9 @@
+LYG GolfStart mobilfix v2.2
+
+Upload BEGGE filer til GitHub-mappen LYG_GolfStart_AI_v2_0/ og erstat filerne med samme navne:
+1. golfstart-widget.js
+2. golfstart-chat.html
+
+Ingen aendring af index.html. AI-backend er endnu ikke aktiveret; eksisterende svarmotor bevares.
+
+Mobilforbedringer: lavere panel, to kolonner med genveje, luk-knap i chatoverskrift.

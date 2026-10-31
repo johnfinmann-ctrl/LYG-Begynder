@@ -2087,6 +2087,10 @@ body:not(.paa-forside) #hs-top{display:none}
         <span class="menu-ark-ikon menu-ark-ikon-naeste"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d='M5 21V3M5 4l9 3.5L5 11M14 17h7M18 14l3 3-3 3'/></svg></span>
         <span>Næste</span>
       </button>
+      <button class="menu-ark-item" data-side="lykkehjul" onclick="vaelgFraArk('lykkehjul')">
+        <span class="menu-ark-bg" style="background:conic-gradient(#c9a84c 0deg 60deg,#1a3d1a 60deg 120deg,#eadcb7 120deg 180deg,#1a3d1a 180deg 240deg,#c9a84c 240deg 300deg,#1a3d1a 300deg)"></span>
+        <span class="menu-ark-ikon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 3v7m9 2h-7m-2 9v-7m-9-2h7M6 6l5 5m7-5-5 5m5 7-5-5m-7 5 5-5"/></svg></span><span>Drej &amp; vind · Demo</span>
+      </button>
       <button class="menu-ark-item" data-side="ekstra" onclick="vaelgFraArk('ekstra')">
         <span class="menu-ark-bg menu-ark-bg-ekstra"></span>
         <span class="menu-ark-bg-overlay"></span>
@@ -2200,7 +2204,31 @@ body:not(.paa-forside) #hs-top{display:none}
 
   </div>
 
+
+  <div class="sek" style="padding-top:16px;padding-bottom:8px">
+    <button onclick="skiftSide('lykkehjul')" style="width:100%;display:flex;align-items:center;gap:14px;text-align:left;border:1px solid #c9a84c;border-radius:18px;background:linear-gradient(115deg,#faf0d1,#edf3e6);padding:17px;color:#1a3d1a;font:inherit;cursor:pointer">
+      <span style="width:42px;height:42px;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 3v7m9 2h-7m-2 9v-7m-9-2h7M6 6l5 5m7-5-5 5m5 7-5-5m-7 5 5-5"/></svg></span>
+      <span style="flex:1"><strong style="display:block;font-size:17px">Drej &amp; vind <small style="font-size:11px;color:#806326">DEMO</small></strong><span style="display:block;font-size:12px;margin-top:4px">Prøv lykkehjulet · Frie prøvedrej</span></span><span aria-hidden="true">›</span>
+    </button>
+  </div>
 </div>
+
+<div id="side-lykkehjul" class="side">
+  <div class="sek" style="padding-bottom:0"><button onclick="skiftSide('velkommen')" style="border:0;background:none;color:#1a3d1a;padding:10px 0;font:inherit;cursor:pointer">‹ Tilbage til Velkommen</button></div>
+  <iframe id="lykkehjul-frame" src="./lykkehjul-demo.html?embedded=1" title="Drej og vind – demoudgave med frie prøvedrej" style="display:block;width:100%;height:1600px;border:0" onload="tilpasLykkehjul(this)"></iframe>
+</div>
+<script>
+function tilpasLykkehjul(frame) {
+  try {
+    var doc=frame.contentDocument;
+    if (!doc || !doc.body) return;
+    var fit=function(){var main=doc.querySelector('main');if(main && main.offsetWidth) frame.style.height=Math.ceil(main.getBoundingClientRect().bottom+doc.querySelector('footer').getBoundingClientRect().height+20)+'px';};
+    fit();
+    if(frame._wheelObserver) frame._wheelObserver.disconnect();
+    frame._wheelObserver=new ResizeObserver(fit);frame._wheelObserver.observe(doc.body);
+  } catch(error) { /* Standalone page remains available if embedding is blocked. */ }
+}
+</script>
 
 <!-- ═══ FORLØBET ═══ -->
 <div id="side-forloeb" class="side">
@@ -4158,5 +4186,6 @@ var MEDLEMSKAB_CONFIG = {
 (function(){var g=window.skiftSide;if(typeof g!=='function')return;window.skiftSide=function(id){document.body.classList.toggle('paa-forside',id==='velkommen');return g.apply(this,arguments)};})();
 </script>
 <script src="./golfstart-widget.js" defer></script>
+<script src="./sponsor-strip.js" defer></script>
 </body>
 </html>

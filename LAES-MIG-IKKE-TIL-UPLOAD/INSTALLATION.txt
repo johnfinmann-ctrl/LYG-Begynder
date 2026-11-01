@@ -1,0 +1,47 @@
+LYG-BEGYNDER KOMPLET V5.1 – INSTALLATIONSVEJLEDNING (GitHub Pages)
+==================================================================
+ZIP'ens rod svarer 1:1 til roden i GitHub-repoet johnfinmann-ctrl/LYG-Begynder.
+Appen har ingen build-trin, ingen cache/service worker – filerne virker, så snart de er uploadet.
+
+A. SKAL UPLOADES TIL GITHUB-RODEN  (hovedmappen, samme niveau som index.html)
+   index.html              ERSTATTER den eksisterende (hele appen + lykkehjulsikon, "Drej & vind"-kort, sponsorbjælke)
+   lykkehjul.html          NY – det nye lykkehjul V4. PERMANENT: må ikke slettes eller overskrives.
+   tjek-lykkehjul.sh       NY (valgfri) – kontrol af at lykkehjul, sponsorbjælke og AI er forbundet
+   golfstart-widget.js     UÆNDRET (GolfStart AI-knap/vindue)         – skal ligge i roden
+   golfstart-chat.html     UÆNDRET (AI-chatvindue)                    – skal ligge i roden
+   golfstart-chat.js       UÆNDRET (AI-chat → Cloudflare Worker)      – skal ligge i roden
+   sponsor-strip.js        UÆNDRET (sponsorbjælken)                   – skal ligge i roden
+   graduation-golf.png     UÆNDRET (billede)                          – skal ligge i roden
+   lyg-begynder-velkomst.mp4  UÆNDRET (velkomstvideo)                 – skal ligge i roden
+   lykkehjul-demo.html     UÆNDRET (gammel demo; ikke slettet – appen bruger den ikke længere)
+   golfstart-test-chat.html / golfstart-test-chat.js / golfstart-test-widget.js / golfstart-v3-test.html
+                           UÆNDREDE testfiler (ikke brugt af den offentlige app; bevaret)
+   README.md, VEJLEDNING.txt   UÆNDREDE
+
+B. SKAL LIGGE I UNDERMAPPER (findes allerede på GitHub, uændrede – behold dem)
+   LYG_GolfStart_AI_v2_0/                (README_START_HER.md, golfstart-chat.html/.js, golfstart-widget.js, cloudflare-worker/worker.js + wrangler.toml)
+   LYG_GolfStart_integration_v1_1/       (INTEGRATION.txt, demo.html, golfstart-chat.html, golfstart-widget.js)
+   Disse er ældre pakker, appen bruger ikke. Upload dem kun, hvis du vil have en komplet gendannelse; ellers lad dem stå.
+
+C. SKAL IKKE UPLOADES
+   Mappen LAES-MIG-IKKE-TIL-UPLOAD (denne mappe)
+
+SÅDAN (enklest, uden at røre noget andet)
+   Du behøver kun at uploade de TRE filer, der er nye/ændrede:  index.html, lykkehjul.html, tjek-lykkehjul.sh.
+   Alt andet i ZIP'en er identisk med det, der allerede ligger på GitHub (kontrolleret byte for byte) og må gerne udelades.
+   1. GitHub -> LYG-Begynder -> Add file -> Upload files -> træk de tre filer ind i roden -> Commit changes.
+      (Vil du i stedet uploade ALT for en komplet gendannelse: pak ZIP'en ud, træk alt undtagen LAES-MIG-IKKE-TIL-UPLOAD ind – mapperne bevarer strukturen.)
+   2. Vent 1-2 minutter, og tjek: https://johnfinmann-ctrl.github.io/LYG-Begynder/
+        [ ] Forsiden viser sponsorbjælken (Golfeksperten, Lyngbygaard Golf, Brasseriet – klikbare)
+        [ ] Forsiden viser kortet "Drej & vind"; Oversigt har punktet "Drej & vind"
+        [ ] https://johnfinmann-ctrl.github.io/LYG-Begynder/lykkehjul.html åbner direkte
+        [ ] GolfStart AI-knappen åbner chatten
+   3. Mobil: luk fanen/appen helt og åbn igen.
+
+VIGTIGT VED FREMTIDIGE OPDATERINGER
+   Når index.html erstattes igen, skal den indeholde: <script src="./sponsor-strip.js" defer>, <script src="./golfstart-widget.js" defer> og lykkehjul-knapperne (aabnLykkehjul).
+   Kør "sh tjek-lykkehjul.sh" i repoets rodmappe efter hver opdatering – scriptet melder FEJL, hvis noget er mistet.
+   (Dette var netop, hvad der skete i upload'en 1/11: lykkehjulsikon, "Drej & vind"-kort og sponsorbjælke manglede. De er nu genindsat.)
+
+CLOUDFLARE
+   GolfStart AI-Workeren (lyg-golfstart-ai) er IKKE ændret. Send et forslag/Forbedringer kræver Workeren lyg-forbedringer-test + D1 (se tidligere leverance "forbedringer/INSTALLATION.txt"); indtil da viser de en forbindelsesfejl.

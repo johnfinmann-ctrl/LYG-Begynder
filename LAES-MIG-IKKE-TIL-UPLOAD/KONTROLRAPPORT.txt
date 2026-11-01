@@ -1,0 +1,26 @@
+KONTROLRAPPORT – LYG-BEGYNDER KOMPLET V5.1  (2. november 2026)
+==============================================================
+METODE
+ index.html i V5.1 er sammenlignet med ALLE tidligere versioner af index.html i GitHub-historikken (fra 19/10 og frem, bl.a. den senest offentliggjorte c7700d2 og 14cd9a5 fra 31/10). Sammenlignet: alle id'er, JavaScript-funktioner, menupunkter (data-side), links/filhenvisninger, indlejrede billeder (hash) og al synlig tekst.
+ Alle øvrige filer i repoet er sammenlignet byte for byte med GitHub.
+
+RESULTAT
+ Filer:  alle 24 filer fra GitHub er med; kun index.html er ændret. Nye: lykkehjul.html, tjek-lykkehjul.sh.
+ Mod 14cd9a5 (31/10, havde lykkehjul + sponsorbjælke) og 8f38bf8, a655549, 27f7da6, 88bca0e:
+   Billeder (36 indlejrede): 0 mangler.   Menupunkter: 0 mangler.   Links (45): 0 mangler (kun den gamle lykkehjul-iframe er erstattet af selvstændig lykkehjul.html).
+   Id'er/funktioner: 0 mangler – undtagen den bevidst erstattede lykkehjul-iframe (side-lykkehjul, lykkehjul-frame, tilpasLykkehjul).
+ Tekst, der er ændret med vilje (godkendt tidligere): FAQ om 9-/18-hulsbanen og bookingsvaret (nye spilleregler); "DEMO"/"Frie prøvedrej"-tekster ved lykkehjulet fjernet.
+ Interne filstier: 0 fejl (ingen absolutte stier, alle lokale filer findes) – egnet til GitHub Pages under /LYG-Begynder/.
+
+BEMÆRKNINGER (ikke fejl i V5)
+ - Teksten "Tilføj LYG Begynder til din hjemmeskærm – så har du alt info med et tryk" fandtes i versioner til og med 29/10 (ba66791…) og blev fjernet i en tidligere GitHub-version (8f2fd7d, 29/10). Den mangler derfor også i den nuværende GitHub-version og er ikke genindsat. Sig til, hvis den skal tilbage.
+ - Ældre versioner fra 19/10 har andre formuleringer i Forløbet (fx "Spil 9 huller · opnå 18 Stableford-point"); de er udviklet videre i V3 og er ikke fjernet i V5.
+ - Sponsorernes web-adresser (inkl. lyg-brasseriet.dk) er uændret fra sponsor-strip.js og er ikke verificeret mod internettet.
+
+TEST (Chromium; iPhone 390 px, iPad 820 px, pc 1280 px)
+ 57 kontroller bestået: alle Oversigt-punkter og bundnavigation, lykkehjul fra Oversigt og forside og tilbage, sponsorbjælke og tre klikbare sponsorer, GolfStart AI åbner og sender spørgsmål (Worker simuleret), ingen JS-fejl/manglende filer, ingen vandret scroll.
+ Lykkehjul: 34 kontroller (20 felter, 60/15/15/10, pilen peger rigtigt for alle felter, præmier falder ned, sponsorer, beviser "Kan ikke indløses endnu").
+ IKKE testet: rigtige enheder, den rigtige AI-Worker, Forbedringer mod rigtig Cloudflare/D1, sponsorernes eksterne sider.
+
+SIKKERHED (lykkehjul)
+ Ingen beskyttelse mod gentagne udtræk findes (hverken lokal eller server). Lokal beskyttelse ville aldrig kunne forhindre snyd på tværs af enheder. Se LYKKEHJUL-SIKKERHED.txt. Beviserne er testbeviser og kan ikke indløses.

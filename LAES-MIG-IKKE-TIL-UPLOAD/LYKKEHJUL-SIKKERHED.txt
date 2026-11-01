@@ -1,0 +1,26 @@
+LYKKEHJULET – SIKKERHED FØR MARTS 2027
+======================================
+NUVÆRENDE STATUS (test)
+ - Der findes INGEN beskyttelse mod gentagne udtræk – hverken lokalt eller på serveren. Hjulet kan drejes ubegrænset, også i V4 og i den tidligere demo.
+ - Selv en lokal beskyttelse (fx en tæller i telefonen) ville ikke kunne forhindre snyd på tværs af enheder, browsere eller ved at rydde data. Den kan derfor aldrig erstatte serversikring.
+ - Hjulet afgøres i browseren (tilfældigt tal på enheden). Man kan dreje ubegrænset mange gange.
+ - Gevinstbeviset er kun en visning på skærmen. Det kan ikke indløses, og knappen "Simulér indløsning" er fjernet.
+ - Beviset viser "Kan ikke indløses endnu" (styres af LYKKEHJUL_CONFIG.aaben = false).
+ - Det er derfor IKKE sikkert at udlevere rigtige præmier ud fra den nuværende version – en deltager kan fx tage skærmbillede, lave flere spins eller ændre tallet i browseren.
+
+KRAV FØR RIGTIG BRUG
+ 1. Spins afgøres på serveren, ikke i browseren (serveren trækker resultatet; hjulet animerer blot til det felt, serveren svarer).
+ 2. Hver deltager får kun det tilladte antal spins. Deltageren identificeres fx ved en personlig engangskode/QR fra klubben (ikke blot enheden), da enheds-/IP-grænser kan omgås.
+ 3. Hver gevinst får et unikt, underskrevet bevisnummer (HMAC) gemt på serveren med status: Udstedt -> Indløst.
+ 4. Indløsning sker kun af en medarbejder/sponsor via en adgangsbeskyttet side (samme login-princip som Forbedringer): scan/indtast bevisnummer -> serveren markerer "Indløst" og afviser et nummer, der allerede er brugt (ingen dobbelt indløsning).
+ 5. Præmiebeholdning og dagsgrænser (fx maks. antal kaffe pr. dag) styres på serveren, så sponsorerne ikke kan blive overrasket.
+ 6. Sandsynlighederne (60/15/15/10) ligger i serveren og kan ikke ændres af brugeren.
+ 7. Beviset gælder kun i en angivet periode og kan ikke forlænges af deltageren.
+
+FORESLÅET GRATIS LØSNING (samme som Forbedringer)
+ Cloudflare Worker + D1 (Workers Free + D1 Free), ingen betaling, ingen eksterne tjenester. Skønnet behov: ca. 3 tabeller (deltagere/koder, spins, beviser).
+ Kan bygges og testes, når I har besluttet: hvor mange spins pr. deltager, hvordan deltagere får koder, og hvem der indløser.
+
+INDTIL DA
+ - Lad LYKKEHJUL_CONFIG.aaben stå på false.
+ - Del ikke hjulet som "rigtig konkurrence", og lov ingen præmier.

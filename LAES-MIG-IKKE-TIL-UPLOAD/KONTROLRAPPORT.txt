@@ -1,8 +1,9 @@
 KONTROLRAPPORT – LYG-BEGYNDER KOMPLET V5.2  (2. november 2026)
 ==============================================================
-UDGANGSPUNKT  V5.1 (komplet). Kun disse tre filer er ændret: lykkehjul.html, golfstart-chat.html, golfstart-widget.js. Alle øvrige filer er byte-for-byte identiske med V5.1 (inkl. index.html, sponsor-strip.js, golfstart-chat.js/svarmotor, alle testfiler, billeder, video og undermapper).
+UDGANGSPUNKT  V5.1 (komplet). Kun disse fire filer er ændret: index.html (kun forsidens billedserie), lykkehjul.html, golfstart-chat.html, golfstart-widget.js. Alle øvrige filer er byte-for-byte identiske med V5.1 (inkl. sponsor-strip.js, golfstart-chat.js/svarmotor, alle testfiler, billeder, video og undermapper).
 
 ÆNDRINGER
+ 0. Forsidens billedanimation (index.html): den godkendte animation fra prototypen er indarbejdet i den eksisterende forside (ikke erstattet med demoen). Rækkefølge: 1 Golfbolden kommer frem – med Lyngbygaard Golf (bold med logo + "ER DU KLAR TIL GOLF?" + knap til Begynderforløbet); 2 Driver – "Dit første slag starter her"; 3 Bunkerslag – "Oplev golfens spænding"; 4 Putteslag – "Lær spillet i dit eget tempo"; 5 Klubhuset – "Bliv en del af fællesskabet". Lyngbygaard Golf-mærke på slide 2-5. Én tekst pr. billede (ingen dobbelttekst), fade, langsom zoom, prikker, respekterer "reducer bevægelse". De fem gamle billeder i den tidligere serie er erstattet af prototypens godkendte billeder; gammel CSS (.hs) er bevaret som inaktiv kode. Velkommen-teksten og knapperne under serien er uændrede.
  1. Lykkehjul – tilbageknap: egen række øverst i headeren; header-top = safe-area-inset-top + 14 px, så knappen ligger under iPhones statuslinje/notch; pillknap med guldkant, min. 44 px høj, ingen overlap med overskriften; fører til index.html (forsiden). Hjulets design uændret.
  2. Lykkehjul – testbeviser: viser "DEMO – testbevis. Kan ikke indløses." og status "Testbevis (demo)". Skjules først, når LYKKEHJUL_CONFIG.aaben sættes til true (ikke gjort).
  3. GolfStart AI mobil (V2.2): lavere panel (maks. 72 % af skærmhøjden; 86 % på små telefoner), aldrig under statuslinjen (safe-area-top) og aldrig over bundnavigationen; genveje i to kolonner; luk-knap 44 px med lys baggrund i chatoverskriften; kompakt header. Svarmotor, Worker-adresse og golfstart-chat.js er urørt. Intet er aktiveret, ingen betalingsfunktioner.
@@ -15,6 +16,6 @@ TESTET (Chromium-emulering; safe-area simuleret som 47 px øverst / 34 px neders
  Regression, hele appen på iPhone/iPad/pc: se resultatet i svaret. Lykkehjul: felter, sandsynligheder, pil/felt for alle 20, præmier og sponsorer.
 KRÆVER MANUEL KONTROL  Rigtig iPhone/iPad (Safari og hjemmeskærm-app): safe-area og tryk kan kun endeligt bekræftes på en fysisk enhed. Svar fra den rigtige GolfStart AI-Worker. Forbedringer mod rigtig Cloudflare. Sponsorernes eksterne links.
 
-BEMÆRK  Den vedhæftede fil "LYG_Begynder_KORREKT_1_Bold_2_Driver_3_Bunker_4_Putter_5_Klubhus.html" er en prototype af forsidens billedserie (ikke hele appen). Den er IKKE indarbejdet; forsidens billedserie er uændret fra V5.1.
+TESTET (billedanimation)  Alle fem billeder vist og kontrolleret visuelt på iPhone (390), iPad (820) og pc (1280): hvert billede fuldt synligt i realtid, øvrige skjult, korrekt tekst og prik, looper tilbage til slide 1, knappen åbner Forløbet, ingen vandret overflow, ingen JS-fejl. Helapp-regression 57/57 og mobiltest (tilbageknap + AI-panel) 36/36 bestået.
 
 SIKKERHED (lykkehjul)  Ingen beskyttelse mod gentagne udtræk findes (hverken lokal eller server); lokal beskyttelse kunne ikke forhindre snyd på tværs af enheder. Se LYKKEHJUL-SIKKERHED.txt.

@@ -4,9 +4,9 @@ ZIP'ens rod svarer 1:1 til roden i GitHub-repoet johnfinmann-ctrl/LYG-Begynder.
 Appen har ingen build-trin, ingen cache/service worker – filerne virker, så snart de er uploadet.
 
 A. SKAL UPLOADES TIL GITHUB-RODEN  (hovedmappen, samme niveau som index.html)
-   ÆNDRET I V5.2 (skal erstatte de eksisterende): lykkehjul.html, golfstart-chat.html, golfstart-widget.js
+   ÆNDRET I V5.2 (skal erstatte de eksisterende): index.html, lykkehjul.html, golfstart-chat.html, golfstart-widget.js
    Resten er uændret fra V5.1.
-   index.html              UÆNDRET siden V5.1 (hele appen + lykkehjulsikon, "Drej & vind"-kort, sponsorbjælke)
+   index.html              ÆNDRET: den godkendte billedanimation er genindsat på forsiden (5 billeder i rækkefølge). Alt andet i appen er uændret (lykkehjulsikon, "Drej & vind"-kort, sponsorbjælke).
    lykkehjul.html          ERSTATTER V5.1-udgaven: ny tilbageknap (safe-area), DEMO-markering på testbeviser. PERMANENT: må ikke slettes.
    tjek-lykkehjul.sh       NY (valgfri) – kontrol af at lykkehjul, sponsorbjælke og AI er forbundet
    golfstart-widget.js     ÆNDRET (V2.2: lavere chatpanel på mobil, ingen overlap) – skal ligge i roden
@@ -29,11 +29,12 @@ C. SKAL IKKE UPLOADES
    Mappen LAES-MIG-IKKE-TIL-UPLOAD (denne mappe)
 
 SÅDAN (enklest, uden at røre noget andet)
-   Fra V5.1 til V5.2 skal du kun uploade DE TRE ÆNDREDE FILER:  lykkehjul.html, golfstart-chat.html, golfstart-widget.js
+   Fra V5.1 til V5.2 skal du kun uploade DE FIRE ÆNDREDE FILER:  index.html, lykkehjul.html, golfstart-chat.html, golfstart-widget.js
    (GitHub -> LYG-Begynder -> Add file -> Upload files -> træk de tre filer ind i roden -> Commit changes).
    Alt andet i ZIP'en er identisk med V5.1 og må gerne udelades. Vil du i stedet lægge ALT op: pak ZIP'en ud og træk alt undtagen LAES-MIG-IKKE-TIL-UPLOAD ind.
-   Er V5.1 ikke uploadet endnu: upload index.html, lykkehjul.html, tjek-lykkehjul.sh + de to AI-filer ovenfor.
+   Er V5.1 ikke uploadet endnu: upload også tjek-lykkehjul.sh (valgfri).
    Tjek efter 1-2 min på https://johnfinmann-ctrl.github.io/LYG-Begynder/ :
+        [ ] Forsiden: billedanimationen kører (Er du klar til golf? -> Driver -> Bunker -> Putter -> Klubhus), Lyngbygaard Golf-mærke på de fire sidste
         [ ] Lykkehjul -> "← Tilbage til appen" ligger under statuslinjen på iPhone og fører til forsiden
         [ ] Lykkehjul: gevinstbevis viser "DEMO – testbevis. Kan ikke indløses."
         [ ] GolfStart AI: lavere panel, genveje i to kolonner, tydelig X, ingen overlap med bundnavigation

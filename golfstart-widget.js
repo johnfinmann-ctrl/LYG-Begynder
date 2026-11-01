@@ -24,8 +24,12 @@
  #lyg-golfstart-panel{right:8px;width:min(440px,calc(100vw - 16px));bottom:calc(var(--lyg-nav,65px) + env(safe-area-inset-bottom,0px) + 10px);height:calc(100vh - var(--lyg-nav,65px) - env(safe-area-inset-bottom,0px) - 28px);height:min(90dvh,640px,calc(100dvh - var(--lyg-nav,65px) - env(safe-area-inset-bottom,0px) - 28px));border-radius:18px}
 }
 @media(max-width:600px){
- #lyg-golfstart-panel{left:8px;width:auto;height:calc(100vh - var(--lyg-nav,65px) - env(safe-area-inset-bottom,0px) - 28px);height:min(90dvh,calc(100dvh - var(--lyg-nav,65px) - env(safe-area-inset-bottom,0px) - 28px))}
+ /* V2.2: lavere panel på mobil, aldrig under statuslinjen og aldrig over bundnavigationen */
+ #lyg-golfstart-panel{left:8px;width:auto;height:calc(100vh - var(--lyg-nav,65px) - env(safe-area-inset-bottom,0px) - 28px);height:min(72dvh,540px,calc(100dvh - var(--lyg-nav,65px) - env(safe-area-inset-bottom,0px) - env(safe-area-inset-top,0px) - 28px));max-height:calc(100dvh - env(safe-area-inset-top,0px) - 16px)}
  #lyg-golfstart-launcher[data-open='true'] ~ #lyg-golfstart-backdrop{display:block}
+}
+@media(max-width:600px) and (max-height:650px){
+ #lyg-golfstart-panel{height:min(86dvh,calc(100dvh - var(--lyg-nav,65px) - env(safe-area-inset-bottom,0px) - env(safe-area-inset-top,0px) - 28px))}
 }
 @media(prefers-reduced-motion:no-preference){#lyg-golfstart-panel[data-open='true']{animation:lyg-chat-in .18s ease-out}@keyframes lyg-chat-in{from{opacity:.6;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}}
 `;

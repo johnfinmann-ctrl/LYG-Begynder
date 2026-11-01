@@ -1,26 +1,20 @@
-KONTROLRAPPORT – LYG-BEGYNDER KOMPLET V5.1  (2. november 2026)
+KONTROLRAPPORT – LYG-BEGYNDER KOMPLET V5.2  (2. november 2026)
 ==============================================================
-METODE
- index.html i V5.1 er sammenlignet med ALLE tidligere versioner af index.html i GitHub-historikken (fra 19/10 og frem, bl.a. den senest offentliggjorte c7700d2 og 14cd9a5 fra 31/10). Sammenlignet: alle id'er, JavaScript-funktioner, menupunkter (data-side), links/filhenvisninger, indlejrede billeder (hash) og al synlig tekst.
- Alle øvrige filer i repoet er sammenlignet byte for byte med GitHub.
+UDGANGSPUNKT  V5.1 (komplet). Kun disse tre filer er ændret: lykkehjul.html, golfstart-chat.html, golfstart-widget.js. Alle øvrige filer er byte-for-byte identiske med V5.1 (inkl. index.html, sponsor-strip.js, golfstart-chat.js/svarmotor, alle testfiler, billeder, video og undermapper).
 
-RESULTAT
- Filer:  alle 24 filer fra GitHub er med; kun index.html er ændret. Nye: lykkehjul.html, tjek-lykkehjul.sh.
- Mod 14cd9a5 (31/10, havde lykkehjul + sponsorbjælke) og 8f38bf8, a655549, 27f7da6, 88bca0e:
-   Billeder (36 indlejrede): 0 mangler.   Menupunkter: 0 mangler.   Links (45): 0 mangler (kun den gamle lykkehjul-iframe er erstattet af selvstændig lykkehjul.html).
-   Id'er/funktioner: 0 mangler – undtagen den bevidst erstattede lykkehjul-iframe (side-lykkehjul, lykkehjul-frame, tilpasLykkehjul).
- Tekst, der er ændret med vilje (godkendt tidligere): FAQ om 9-/18-hulsbanen og bookingsvaret (nye spilleregler); "DEMO"/"Frie prøvedrej"-tekster ved lykkehjulet fjernet.
- Interne filstier: 0 fejl (ingen absolutte stier, alle lokale filer findes) – egnet til GitHub Pages under /LYG-Begynder/.
+ÆNDRINGER
+ 1. Lykkehjul – tilbageknap: egen række øverst i headeren; header-top = safe-area-inset-top + 14 px, så knappen ligger under iPhones statuslinje/notch; pillknap med guldkant, min. 44 px høj, ingen overlap med overskriften; fører til index.html (forsiden). Hjulets design uændret.
+ 2. Lykkehjul – testbeviser: viser "DEMO – testbevis. Kan ikke indløses." og status "Testbevis (demo)". Skjules først, når LYKKEHJUL_CONFIG.aaben sættes til true (ikke gjort).
+ 3. GolfStart AI mobil (V2.2): lavere panel (maks. 72 % af skærmhøjden; 86 % på små telefoner), aldrig under statuslinjen (safe-area-top) og aldrig over bundnavigationen; genveje i to kolonner; luk-knap 44 px med lys baggrund i chatoverskriften; kompakt header. Svarmotor, Worker-adresse og golfstart-chat.js er urørt. Intet er aktiveret, ingen betalingsfunktioner.
 
-BEMÆRKNINGER (ikke fejl i V5)
- - Teksten "Tilføj LYG Begynder til din hjemmeskærm – så har du alt info med et tryk" fandtes i versioner til og med 29/10 (ba66791…) og blev fjernet i en tidligere GitHub-version (8f2fd7d, 29/10). Den mangler derfor også i den nuværende GitHub-version og er ikke genindsat. Sig til, hvis den skal tilbage.
- - Ældre versioner fra 19/10 har andre formuleringer i Forløbet (fx "Spil 9 huller · opnå 18 Stableford-point"); de er udviklet videre i V3 og er ikke fjernet i V5.
- - Sponsorernes web-adresser (inkl. lyg-brasseriet.dk) er uændret fra sponsor-strip.js og er ikke verificeret mod internettet.
+BEVARET (kontrolleret)  Velkommen, Forløbet, Hold, Tilmeld, Oversigt, FAQ, Kontakt, Links, Næste, Ekstra, Medlemskab, Drej & vind (ikon + forsidekort), sponsorbjælke med 3 klikbare sponsorer, velkomstvideo, billedserie, Send et forslag/Forbedringer, GolfStart AI og testfiler.
+LYKKEHJUL  20 felter med tekst, 12 nitter (60 %) / 3 tees (15 %) / 3 bolde (15 %) / 2 kaffe (10 %), faldende præmier, beviser med sponsor (Brasseriet kaffe; Lyngbygaard Golf bolde; Golfeksperten tees og bolde).
 
-TEST (Chromium; iPhone 390 px, iPad 820 px, pc 1280 px)
- 57 kontroller bestået: alle Oversigt-punkter og bundnavigation, lykkehjul fra Oversigt og forside og tilbage, sponsorbjælke og tre klikbare sponsorer, GolfStart AI åbner og sender spørgsmål (Worker simuleret), ingen JS-fejl/manglende filer, ingen vandret scroll.
- Lykkehjul: 34 kontroller (20 felter, 60/15/15/10, pilen peger rigtigt for alle felter, præmier falder ned, sponsorer, beviser "Kan ikke indløses endnu").
- IKKE testet: rigtige enheder, den rigtige AI-Worker, Forbedringer mod rigtig Cloudflare/D1, sponsorernes eksterne sider.
+TESTET (Chromium-emulering; safe-area simuleret som 47 px øverst / 34 px nederst)
+ iPhone 14 (390 px), iPhone SE (320 × 568), Android (412 px): tilbageknap under statuslinje, ≥ 44 px, rammes ved tryk, fører til forsiden; AI-panel under statuslinje, over bundnavigation, lavere end før, genveje i 2 kolonner, luk-knap synlig og lukker, spørgsmål sendes (Worker simuleret).
+ Regression, hele appen på iPhone/iPad/pc: se resultatet i svaret. Lykkehjul: felter, sandsynligheder, pil/felt for alle 20, præmier og sponsorer.
+KRÆVER MANUEL KONTROL  Rigtig iPhone/iPad (Safari og hjemmeskærm-app): safe-area og tryk kan kun endeligt bekræftes på en fysisk enhed. Svar fra den rigtige GolfStart AI-Worker. Forbedringer mod rigtig Cloudflare. Sponsorernes eksterne links.
 
-SIKKERHED (lykkehjul)
- Ingen beskyttelse mod gentagne udtræk findes (hverken lokal eller server). Lokal beskyttelse ville aldrig kunne forhindre snyd på tværs af enheder. Se LYKKEHJUL-SIKKERHED.txt. Beviserne er testbeviser og kan ikke indløses.
+BEMÆRK  Den vedhæftede fil "LYG_Begynder_KORREKT_1_Bold_2_Driver_3_Bunker_4_Putter_5_Klubhus.html" er en prototype af forsidens billedserie (ikke hele appen). Den er IKKE indarbejdet; forsidens billedserie er uændret fra V5.1.
+
+SIKKERHED (lykkehjul)  Ingen beskyttelse mod gentagne udtræk findes (hverken lokal eller server); lokal beskyttelse kunne ikke forhindre snyd på tværs af enheder. Se LYKKEHJUL-SIKKERHED.txt.

@@ -1811,6 +1811,52 @@ body { font-size: 16px; -webkit-font-smoothing: antialiased; }
 .mk-link{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:22px;min-height:50px;border-radius:14px;background:#1a3d1a;color:#f3e2b0;border:1.5px solid #c9a84c;font-size:15px;font-weight:700;text-decoration:none}
 .mk-fod{margin-top:12px;font-size:12px;line-height:1.5;color:#7a7468;text-align:center}
 @media(prefers-reduced-motion:no-preference){.mk-aaben .mk-detalje{animation:mkind .18s ease-out}@keyframes mkind{from{opacity:0}to{opacity:1}}}
+/* ═══ MEDLEMSKAB: fold-ud kategorier (mk2) ═══ */
+.mk2-acc{display:flex;flex-direction:column;gap:12px}
+.mk2-kat{border:1.5px solid rgba(201,168,76,.6);border-radius:16px;background:#fffaf0;box-shadow:0 2px 8px rgba(26,61,26,.08);overflow:hidden;scroll-margin-top:84px;transition:box-shadow .25s,border-color .25s}
+.mk2-kat.mk2-aaben{border-color:#c9a84c;box-shadow:0 6px 18px rgba(26,61,26,.18)}
+.mk2-hoved{display:flex;align-items:center;gap:12px;width:100%;min-height:68px;padding:12px 14px 12px 16px;margin:0;border:0;border-radius:0;background:linear-gradient(155deg,#245a2b,#17381b);color:#f3e2b0;font:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mk2-hoved:focus-visible{outline:3px solid #c9a84c;outline-offset:-4px}
+.mk2-tal{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid #c9a84c;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#e9d28a}
+.mk2-tekst{flex:1;min-width:0}
+.mk2-navn{display:block;font-size:18px;font-weight:700;line-height:1.2;color:#fff7dc}
+.mk2-under{display:block;margin-top:3px;font-size:13px;line-height:1.35;color:#d9cfa8}
+.mk2-pil{flex:none;width:22px;height:22px;color:#c9a84c;opacity:.9;transition:transform .3s ease}
+.mk2-pil svg{display:block;width:100%;height:100%}
+.mk2-aaben .mk2-pil{transform:rotate(180deg)}
+.mk2-panel{height:0;overflow:hidden;visibility:hidden;transition:height .32s ease,visibility 0s linear .32s;background:#fbf5e6}
+.mk2-aaben .mk2-panel{visibility:visible;transition:height .32s ease,visibility 0s}
+.mk2-ind{padding:6px 14px 16px}
+.mk2-m{padding:14px 0 16px;border-top:1px solid #eadfbd}
+.mk2-m:first-child{border-top:0}
+.mk2-m-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px}
+.mk2-m-navn{font-size:17px;font-weight:700;line-height:1.25;color:#1a3d1a}
+.mk2-m-pris{font-size:16px;font-weight:700;color:#1a3d1a;white-space:nowrap}
+.mk2-m-pris small{font-size:12px;font-weight:600;color:#7a7468}
+.mk2-m-pris.mk2-uafklaret{font-size:13px;font-weight:600;color:#7a7468;white-space:normal}
+.mk2-maal{display:inline-block;margin-top:7px;font-size:12px;font-weight:600;letter-spacing:.3px;color:#6f5a1e;background:#f4e9c8;border-radius:12px;padding:4px 10px}
+.mk2-besk{margin:9px 0 0;font-size:14px;line-height:1.5;color:#33362d}
+.mk2-h{margin:13px 0 6px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8a7a5a;font-weight:700}
+.mk2-chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mk2-chip{border-radius:12px;padding:8px 10px;font-size:13px;line-height:1.3;border:1.5px solid #cfc7b2;background:#f3efe3;color:#4d4a3f;min-width:0}
+.mk2-chip b{display:block;font-size:12px;letter-spacing:.2px;margin-bottom:2px;color:#1a3d1a}
+.mk2-chip.ja{background:#e7f1e2;border-color:#7fa779}
+.mk2-chip.greenfee{background:#f8edc9;border-color:#c9a84c}
+.mk2-chip.ukendt{border-style:dashed}
+.mk2-note{margin:8px 0 0;font-size:12px;line-height:1.45;color:#7a7468}
+.mk2-ul{margin:0;padding:0;list-style:none}
+.mk2-ul li{position:relative;padding:4px 0 4px 20px;font-size:14px;line-height:1.45;color:#33362d}
+.mk2-ul li::before{content:"";position:absolute;left:2px;top:11px;width:8px;height:8px;border-radius:50%;background:#c9a84c}
+.mk2-kat.mk2-andre{border-color:rgba(138,122,90,.45);box-shadow:none;background:#faf6ec}
+.mk2-andre .mk2-hoved{background:#f1ead6;color:#1a3d1a;min-height:56px}
+.mk2-andre .mk2-navn{font-size:15px;color:#1a3d1a}
+.mk2-andre .mk2-under{color:#6b6551}
+.mk2-andre .mk2-tal{border-color:#8a7a5a;color:#6f5a1e}
+.mk2-andre .mk2-pil{color:#8a6d1a}
+.mk2-ekstra-intro{margin:10px 0 0;font-size:13px;line-height:1.45;color:#6b6551}
+@media(min-width:700px){.mk2-chips{grid-template-columns:1fr 1fr}.mk2-ind{padding:8px 20px 20px}}
+@media(prefers-reduced-motion:reduce){.mk2-panel,.mk2-pil,.mk2-kat{transition:none!important}}
+
 
 /* ═══ V3 FORSIDE: billedserie (6 s pr. billede, 1,5 s fade, 4 % zoom) ═══ */
 .hs{position:relative;height:clamp(260px,78vw,340px);overflow:hidden;background:#17381b}
@@ -3207,12 +3253,10 @@ body:not(.paa-forside) #hs-top{display:none}
   <div class="sek">
     <div class="sek-tag">Lyngbygaard Golf</div>
     <div class="sek-titel">Medlemskab</div>
-    <p class="mk-intro">Tryk på et kort for at se medlemsfordele og betingelser. Adgang til 18-hulsbanen og SEGA 9-hulsbanen afhænger af dit valgte medlemskab.</p>
-    <div class="mk-liste" id="mk-liste-1"></div>
-    <div class="mk-gruppe">Øvrige medlemskaber</div>
-    <div class="mk-liste" id="mk-liste-2"></div>
+    <p class="mk-intro">Vælg en kategori for at se medlemskaber, priser og spillerettigheder. Adgang til 18-hulsbanen og SEGA 9-hulsbanen afhænger af dit valgte medlemskab.</p>
+    <div class="mk2-acc" id="mk2-acc"></div>
     <a class="mk-link" id="mk-link" href="https://lyg.dk/medlemskab/medlemskaber/" target="_blank" rel="noopener">Se alle medlemskaber på lyg.dk <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-    <p class="mk-fod">Priser og vilkår kan ændre sig. Kontrollér altid aktuelle priser og betingelser på lyg.dk.</p>
+    <p class="mk-fod">Priser og vilkår er hentet fra lyg.dk (29. okt. 2026) og kan ændre sig. Kontrollér altid aktuelle priser og betingelser på lyg.dk.</p>
   </div>
 </div>
 
@@ -4453,6 +4497,93 @@ var MEDLEMSKAB_CONFIG = {
   // luk åbne kort, når siden forlades
   var gammelSkift = window.skiftSide;
   if (typeof gammelSkift === 'function') window.skiftSide = function(id){ if (id!=='medlemskab') lukAlle(null); return gammelSkift.apply(this, arguments); };
+})();
+</script>
+<script>
+/* Medlemskab: fire fold-ud kategorier. Data hentes uændret fra MEDLEMSKAB_CONFIG (ingen nye priser/betingelser). */
+(function(){
+  var C = window.MEDLEMSKAB_CONFIG || (typeof MEDLEMSKAB_CONFIG!=='undefined' ? MEDLEMSKAB_CONFIG : null);
+  var host = document.getElementById('mk2-acc'); if(!C || !host) return;
+  var KAT = [
+    { id:'9huls',  navn:'9-hulsmedlemskab',      under:'Adgang til 9-hulsbanen',                 ids:['ni-huls'] },
+    { id:'senior', navn:'Seniormedlemskab',      under:'Over 25 år',                             ids:['senior'] },
+    { id:'flex',   navn:'Fleksible medlemskaber',under:'Intro, Longdistance, Træning og Passivt', ids:['intro','longdistance','traening','passiv'] },
+    { id:'unge',   navn:'Unge og juniorer',      under:'Ungsenior, Yngling, Junior og Studie',   ids:['ungsenior','yngling','junior','studie'] }
+  ];
+  /* medlemskaber, der ikke passer i de fire kategorier – vises særskilt, slettes ikke */
+  var ANDRE = { id:'andre', navn:'Medlemskaber uden for de fire grupper', under:'UngFlex og Begyndermedlemskab', ids:['ungflex','begynder'],
+    intro:'Disse to medlemskaber findes i appen, men passer ikke i de fire grupper. De vises derfor her.' };
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  var byId={}; C.medlemskaber.forEach(function(m){ byId[m.id]=m; });
+  function el(tag,cls,txt){ var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+  /* adgang til baner – kun ud fra de eksisterende oplysninger (baner.tekst / baner.note) */
+  function adgang(m){
+    var t=m.baner.tekst;
+    if (m.id==='ni-huls'||m.id==='ungflex') return {nine:['ja','Adgang'], eigh:['greenfee','Kun mod greenfee (100 kr. rabat)']};
+    if (t==='Alle faciliteter') return {nine:['ja','Alle faciliteter ifølge lyg.dk'], eigh:['ja','Alle faciliteter ifølge lyg.dk']};
+    return {nine:['ukendt','Ikke oplyst på lyg.dk'], eigh:['ukendt','Ikke oplyst på lyg.dk']};
+  }
+  function chip(label,v){ var c=el('div','mk2-chip '+v[0]); c.appendChild(el('b',null,label)); c.appendChild(document.createTextNode(v[1])); return c; }
+  function medlem(m){
+    var w=el('div','mk2-m');
+    var top=el('div','mk2-m-top'); top.appendChild(el('div','mk2-m-navn',m.navn));
+    var p=el('div','mk2-m-pris');
+    if (m.bekraeftet) { p.textContent = m.prisTekst || (m.pris.toLocaleString('da-DK')+' kr.'); }
+    else if (m.pris!=null) { p.appendChild(document.createTextNode(m.pris.toLocaleString('da-DK')+' kr.')); }
+    else { p.textContent = m.prisTekst || 'Pris: se lyg.dk'; p.classList.add('mk2-uafklaret'); }
+    top.appendChild(p); w.appendChild(top);
+    w.appendChild(el('span','mk2-maal',m.maal));
+    w.appendChild(el('p','mk2-besk',m.lang));
+    w.appendChild(el('div','mk2-h','Spillerettigheder'));
+    var a=adgang(m), g=el('div','mk2-chips'); g.appendChild(chip('SEGA 9-hulsbanen',a.nine)); g.appendChild(chip('18-hulsbanen',a.eigh)); w.appendChild(g);
+    w.appendChild(el('p','mk2-note',m.baner.tekst+'. '+m.baner.note));
+    w.appendChild(el('div','mk2-h','Betingelser og begrænsninger'));
+    var ul=el('ul','mk2-ul'); m.betingelser.forEach(function(t){ ul.appendChild(el('li',null,t)); }); w.appendChild(ul);
+    return w;
+  }
+  var kort=[];
+  function sæt(k,aaben,straks){
+    var h=k.querySelector('.mk2-hoved'), p=k.querySelector('.mk2-panel');
+    h.setAttribute('aria-expanded',String(aaben));
+    if (aaben){
+      k.classList.add('mk2-aaben');
+      if (straks){ p.style.height='auto'; return; }
+      p.style.height=p.scrollHeight+'px';
+      var klar=function(e){ if(e&&e.target!==p) return; p.removeEventListener('transitionend',klar); if(k.classList.contains('mk2-aaben')) p.style.height='auto'; };
+      p.addEventListener('transitionend',klar);
+      setTimeout(klar,450);
+    } else {
+      if (straks){ k.classList.remove('mk2-aaben'); p.style.height='0px'; return; }
+      p.style.height=p.scrollHeight+'px'; void p.offsetHeight; k.classList.remove('mk2-aaben'); p.style.height='0px';
+    }
+  }
+  function skift(k){
+    var aaben=!k.classList.contains('mk2-aaben');
+    kort.forEach(function(o){ if(o!==k && o.classList.contains('mk2-aaben')) sæt(o,false); });
+    sæt(k,aaben);
+    if (aaben) setTimeout(function(){ var r=k.getBoundingClientRect(); if(r.top<70||r.top>window.innerHeight*0.5) k.scrollIntoView({behavior:'smooth',block:'start'}); },340);
+  }
+  function byg(kat,nr,andre){
+    var k=el('section','mk2-kat'+(andre?' mk2-andre':'')); k.dataset.kat=kat.id;
+    var h=el('button','mk2-hoved'); h.type='button'; h.id='mk2-h-'+kat.id; h.setAttribute('aria-expanded','false'); h.setAttribute('aria-controls','mk2-p-'+kat.id);
+    h.appendChild(el('span','mk2-tal',andre?'+':String(nr)));
+    var t=el('span','mk2-tekst'); t.appendChild(el('span','mk2-navn',kat.navn)); t.appendChild(el('span','mk2-under',kat.under)); h.appendChild(t);
+    var pil=el('span','mk2-pil'); pil.setAttribute('aria-hidden','true'); pil.innerHTML=CHEV; h.appendChild(pil);
+    var p=el('div','mk2-panel'); p.id='mk2-p-'+kat.id; p.setAttribute('role','region'); p.setAttribute('aria-labelledby',h.id);
+    var ind=el('div','mk2-ind');
+    if (kat.intro) ind.appendChild(el('p','mk2-ekstra-intro',kat.intro));
+    kat.ids.forEach(function(id){ if(byId[id]) ind.appendChild(medlem(byId[id])); });
+    p.appendChild(ind); k.appendChild(h); k.appendChild(p);
+    h.addEventListener('click',function(){ skift(k); });
+    kort.push(k); return k;
+  }
+  KAT.forEach(function(kat,i){ host.appendChild(byg(kat,i+1,false)); });
+  host.appendChild(byg(ANDRE,0,true));
+  /* kontrol: intet medlemskab må mangle i visningen */
+  var vist={}; KAT.concat([ANDRE]).forEach(function(k){ k.ids.forEach(function(id){ vist[id]=1; }); });
+  C.medlemskaber.forEach(function(m){ if(!vist[m.id]) host.appendChild(medlem(m)); });
+  window.mk2LukAlle=function(){ kort.forEach(function(k){ if(k.classList.contains('mk2-aaben')) sæt(k,false,true); }); };
+  var g=window.skiftSide; if (typeof g==='function') window.skiftSide=function(id){ if(id!=='medlemskab') window.mk2LukAlle(); return g.apply(this,arguments); };
 })();
 </script>
 <script>

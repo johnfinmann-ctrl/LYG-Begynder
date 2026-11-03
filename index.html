@@ -1921,8 +1921,9 @@ body:not(.paa-forside) #hs-top{display:none}
 
 /* ═══ FORSIDE: GODKENDT BILLEDANIMATION (5 billeder, prototype "KORREKT 1 Bold…5 Klubhus") ═══ */
 .hv{position:relative;height:400px;overflow:hidden;isolation:isolate;background:#274d27;border-bottom:4px solid #d0ae51}
-.hv-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease;pointer-events:none}
-.hv-slide.hv-active{opacity:1;pointer-events:auto}
+.hv-track{display:flex;width:100%;height:100%;will-change:transform;transform:translate3d(0,0,0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.hv-track.hv-glid{transition:transform 1s cubic-bezier(.65,0,.35,1)}
+.hv-slide{position:relative;flex:0 0 100%;width:100%;min-width:0;height:100%;overflow:hidden;transform:translateZ(0)}
 .hv-bg{position:absolute;inset:0;background-position:center center;background-size:cover}
 .hv-slide:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,#0000 48%,#102b18bb 100%);pointer-events:none}
 .hv-slide.hv-intro:after{background:linear-gradient(90deg,#112d209c 0%,#102c1944 53%,transparent 100%),linear-gradient(0deg,#0b261c75,transparent 60%)}
@@ -1936,9 +1937,9 @@ body:not(.paa-forside) #hs-top{display:none}
 .hv-ball-mark{z-index:1;width:82%;text-align:center;display:flex;flex-direction:column;align-items:center}
 .hv-ball-mark img{width:100%;max-height:95px;object-fit:contain}
 .hv-ball-mark strong{font-size:clamp(12px,3.5vw,19px);font-weight:900;color:#0c5a36}
-.hv-intro.hv-active .hv-ball{animation:hv-enter 1.4s .6s cubic-bezier(.15,.8,.28,1) forwards,hv-bob 2.8s 2s ease-in-out infinite}
-.hv-intro.hv-active .hv-copy{animation:hv-fadeUp .8s 2s both}
-.hv-slide:not(.hv-intro).hv-active .hv-bg{animation:hv-subtle 6.3s ease-out both}
+.hv-intro.hv-active .hv-ball{animation:hv-enter 1.2s .35s cubic-bezier(.15,.8,.28,1) forwards,hv-bob 2.8s 1.6s ease-in-out infinite}
+.hv-intro.hv-active .hv-copy{animation:hv-fadeUp .7s 1.2s both}
+.hv-slide:not(.hv-intro).hv-active .hv-bg{animation:hv-subtle 5.2s ease-out both}
 @keyframes hv-enter{to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes hv-bob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1)}}
 @keyframes hv-fadeUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
@@ -1950,7 +1951,26 @@ body:not(.paa-forside) #hs-top{display:none}
 .hv-brand img{display:block;width:58px;height:45px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(255,255,255,.7))}
 .hv-brand span{font-size:11px;font-weight:800;line-height:1.1;color:#fff;text-shadow:0 1px 5px #082b18,0 1px 3px #082b18;white-space:nowrap}
 @media(max-width:430px){.hv-brand{width:77px;right:12px;top:12px}}
-@media(prefers-reduced-motion:reduce){.hv-slide,.hv-ball,.hv-copy,.hv-bg{animation:none!important;transition:none!important}.hv-intro .hv-ball{opacity:1;transform:none}}
+/* ═══ INFO-POP OP (meddelelse ved åbning) ═══ */
+#infopopup{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);background:rgba(10,32,14,.62);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+#infopopup.vis{display:flex;animation:ip-bg .25s ease-out}
+.ip-kort{position:relative;width:100%;max-width:420px;max-height:calc(100dvh - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:auto;-webkit-overflow-scrolling:touch;background:#fffaf0;border:2px solid #c9a84c;border-radius:20px;box-shadow:0 18px 50px rgba(5,25,10,.5);animation:ip-kort .32s cubic-bezier(.2,.8,.3,1)}
+.ip-top{background:linear-gradient(155deg,#245a2b,#17381b);padding:22px 64px 18px 22px;border-bottom:3px solid #c9a84c}
+.ip-maerke{display:block;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#d9c27a;margin-bottom:6px}
+.ip-titel{margin:0;font-size:26px;line-height:1.15;font-weight:800;color:#fff7dc}
+.ip-x{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:50%;border:1.5px solid #c9a84c;background:rgba(255,250,240,.12);color:#f3e2b0;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;-webkit-tap-highlight-color:transparent}
+.ip-x svg{width:20px;height:20px}
+.ip-x:focus-visible,.ip-luk:focus-visible{outline:3px solid #c9a84c;outline-offset:2px}
+.ip-krop{padding:20px 22px 6px}
+.ip-krop p{margin:0 0 12px;font-size:16px;line-height:1.55;color:#33362d}
+.ip-sign{margin:6px 0 0;padding:12px 0 0;border-top:1px solid #e0d3a8;font-size:15px;font-weight:700;line-height:1.4;color:#1a3d1a}
+.ip-fod{padding:14px 22px 22px}
+.ip-luk{display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;border-radius:14px;border:1.5px solid #c9a84c;background:linear-gradient(155deg,#245a2b,#17381b);color:#f3e2b0;font:inherit;font-size:16px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent}
+@keyframes ip-bg{from{opacity:0}to{opacity:1}}
+@keyframes ip-kort{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+@media(max-width:380px){.ip-titel{font-size:23px}.ip-krop p{font-size:15px}}
+@media(prefers-reduced-motion:reduce){#infopopup.vis,.ip-kort{animation:none}}
+@media(prefers-reduced-motion:reduce){.hv-track,.hv-slide,.hv-ball,.hv-copy,.hv-bg{animation:none!important;transition:none!important}.hv-intro .hv-ball{opacity:1;transform:none}}
 </style>
 </head>
 <body class="paa-forside">
@@ -2065,7 +2085,7 @@ body:not(.paa-forside) #hs-top{display:none}
 
 <!-- ═══ V3 FORSIDE: BILLEDSERIE + LYST VELKOMSTOMRÅDE (kun på forsiden) ═══ -->
 <div id="hs-top">
-  <div class="hv" id="hv" role="region" aria-roledescription="billedserie" aria-label="Golfmotiver fra Lyngbygaard Golf"><div class="hv-slide hv-intro hv-active" role="group" aria-label="Er du klar til golf?"><div class="hv-bg" data-bg="sunset"></div><div class="hv-ball"><div class="hv-ball-mark"><img alt="Lyngbygaard Golf logo" data-logo><strong>LYG.DK</strong></div></div><div class="hv-copy"><div class="hv-small">ER DU KLAR TIL</div><div class="hv-big">GOLF?</div><a role="button" tabindex="0" aria-label="Gå til begynderforløbet" onclick="skiftSide('forloeb')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();skiftSide('forloeb')}">SE BEGYNDERFORLØBET →</a></div></div><div class="hv-slide" role="group" aria-label="Dit første slag starter her"><div class="hv-bg" data-bg="p0"></div><div class="hv-title">Dit første slag starter her</div><div class="hv-brand" aria-label="Lyngbygaard Golf"><img alt="Lyngbygaard Golf" data-logo><span>Lyngbygaard Golf</span></div></div><div class="hv-slide" role="group" aria-label="Oplev golfens spænding"><div class="hv-bg" data-bg="p2"></div><div class="hv-title">Oplev golfens spænding</div><div class="hv-brand" aria-label="Lyngbygaard Golf"><img alt="Lyngbygaard Golf" data-logo><span>Lyngbygaard Golf</span></div></div><div class="hv-slide" role="group" aria-label="Lær spillet i dit eget tempo"><div class="hv-bg" data-bg="p1"></div><div class="hv-title">Lær spillet i dit eget tempo</div><div class="hv-brand" aria-label="Lyngbygaard Golf"><img alt="Lyngbygaard Golf" data-logo><span>Lyngbygaard Golf</span></div></div><div class="hv-slide" role="group" aria-label="Bliv en del af fællesskabet"><div class="hv-bg" data-bg="p3"></div><div class="hv-title">Bliv en del af fællesskabet</div><div class="hv-brand" aria-label="Lyngbygaard Golf"><img alt="Lyngbygaard Golf" data-logo><span>Lyngbygaard Golf</span></div></div><div class="hv-dots" id="hv-dots" aria-hidden="true"></div></div>
+  <div class="hv" id="hv" role="region" aria-roledescription="billedserie" aria-label="Golfmotiver fra Lyngbygaard Golf"><div class="hv-track" id="hv-track"><div class="hv-slide hv-intro hv-active" role="group" aria-label="Er du klar til golf?"><div class="hv-bg" data-bg="sunset"></div><div class="hv-ball"><div class="hv-ball-mark"><img alt="Lyngbygaard Golf logo" data-logo><strong>LYG.DK</strong></div></div><div class="hv-copy"><div class="hv-small">ER DU KLAR TIL</div><div class="hv-big">GOLF?</div><a role="button" tabindex="0" aria-label="Gå til begynderforløbet" onclick="skiftSide('forloeb')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();skiftSide('forloeb')}">SE BEGYNDERFORLØBET →</a></div></div><div class="hv-slide" role="group" aria-label="Dit første slag starter her"><div class="hv-bg" data-bg="p0"></div><div class="hv-title">Dit første slag starter her</div><div class="hv-brand" aria-label="Lyngbygaard Golf"><img alt="Lyngbygaard Golf" data-logo><span>Lyngbygaard Golf</span></div></div><div class="hv-slide" role="group" aria-label="Oplev golfens spænding"><div class="hv-bg" data-bg="p2"></div><div class="hv-title">Oplev golfens spænding</div><div class="hv-brand" aria-label="Lyngbygaard Golf"><img alt="Lyngbygaard Golf" data-logo><span>Lyngbygaard Golf</span></div></div><div class="hv-slide" role="group" aria-label="Lær spillet i dit eget tempo"><div class="hv-bg" data-bg="p1"></div><div class="hv-title">Lær spillet i dit eget tempo</div><div class="hv-brand" aria-label="Lyngbygaard Golf"><img alt="Lyngbygaard Golf" data-logo><span>Lyngbygaard Golf</span></div></div><div class="hv-slide" role="group" aria-label="Bliv en del af fællesskabet"><div class="hv-bg" data-bg="p3"></div><div class="hv-title">Bliv en del af fællesskabet</div><div class="hv-brand" aria-label="Lyngbygaard Golf"><img alt="Lyngbygaard Golf" data-logo><span>Lyngbygaard Golf</span></div></div></div><div class="hv-dots" id="hv-dots" aria-hidden="true"></div></div>
   <div class="hs-velk">
     <h1 class="hs-titel">Velkommen til banen</h1>
     <p class="hs-tekst">Vi hjælper dig hele vejen fra dit første slag til golfkortet.</p>
@@ -4598,12 +4618,120 @@ var MEDLEMSKAB_CONFIG = {
   var root=document.getElementById('hv');if(!root)return;
   root.querySelectorAll('[data-bg]').forEach(function(e){e.style.backgroundImage='url("'+IMG[e.getAttribute('data-bg')]+'")'});
   root.querySelectorAll('img[data-logo]').forEach(function(i){i.src=LOGO});
-  var slides=[].slice.call(root.querySelectorAll('.hv-slide')),dots=document.getElementById('hv-dots'),cur=0,timer;
-  slides.forEach(function(){dots.appendChild(document.createElement('i'))});
-  function show(i){cur=i;slides.forEach(function(s,j){s.classList.remove('hv-active');if(j===i){void s.offsetWidth;s.classList.add('hv-active')}});
-    [].slice.call(dots.children).forEach(function(d,j){d.classList.toggle('hv-on',j===i)});
-    clearTimeout(timer);timer=setTimeout(function(){show((cur+1)%slides.length)},i===0?7500:6200)}
-  show(0);
+  /* Skridende billedserie (højre -> venstre): ~4 s pr. billede + 1 s glidende overgang (translate3d, GPU).
+     Ring uden kloner: efter hver overgang flyttes det forreste billede bagest, så sidste -> første glider lige så jævnt. */
+  var HOLD=4000, GLID=1000;
+  var track=document.getElementById('hv-track'),dots=document.getElementById('hv-dots'),n=track.children.length,logisk=0,timer,laas=false;
+  for(var d=0;d<n;d++)dots.appendChild(document.createElement('i'));
+  function prik(i){[].slice.call(dots.children).forEach(function(x,j){x.classList.toggle('hv-on',j===i)})}
+  function plan(ms){clearTimeout(timer);timer=setTimeout(naeste,ms)}
+  function naeste(){
+    if(laas)return;
+    if(document.hidden){plan(500);return}
+    laas=true;
+    var foer=track.children[0],naest=track.children[1];
+    naest.classList.add('hv-active');
+    logisk=(logisk+1)%n;prik(logisk);
+    var faerdig=false;
+    function slut(){
+      if(faerdig)return;faerdig=true;track.removeEventListener('transitionend',tend);clearTimeout(vagt);
+      foer.classList.remove('hv-active');
+      track.classList.remove('hv-glid');
+      track.appendChild(foer);
+      track.style.transform='translate3d(0,0,0)';
+      void track.offsetWidth;
+      laas=false;plan(HOLD);
+    }
+    function tend(e){if(e.target===track&&e.propertyName==='transform')slut()}
+    track.addEventListener('transitionend',tend);
+    var vagt=setTimeout(slut,GLID+250);
+    void track.offsetWidth;
+    track.classList.add('hv-glid');
+    track.style.transform='translate3d(-100%,0,0)';
+  }
+  prik(0);plan(HOLD);
+})();
+</script>
+<!-- ═══ INFO-POP OP (styres af INFO_POPUP_CONFIG i scriptet nedenfor) ═══ -->
+<div id="infopopup" role="dialog" aria-modal="true" aria-labelledby="ip-titel" aria-hidden="true">
+  <div class="ip-kort">
+    <button type="button" class="ip-x" id="ip-x" aria-label="Luk meddelelsen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="ip-top"><span class="ip-maerke" id="ip-maerke"></span><h2 class="ip-titel" id="ip-titel"></h2></div>
+    <div class="ip-krop" id="ip-krop"></div>
+    <div class="ip-fod"><button type="button" class="ip-luk" id="ip-luk"></button></div>
+  </div>
+</div>
+<script>
+/* ═══════════════ INFO-POP OP – sådan bruger du den ═══════════════
+   1) Ændre teksten:        redigér en meddelelse nedenfor (titel / tekst / afslutning).
+   2) Vis den igen:         hæv meddelelsens "version" (fx fra 1 til 2) – så ser alle den én gang til.
+   3) Slå den fra/til:      sæt "aktiv" til false/true – enten for hele funktionen (AKTIV) eller for én meddelelse.
+   4) Ny meddelelse:        kopiér en blok i "meddelelser", giv den et nyt, unikt "id", og læg den FØRST i listen.
+   Vist-status gemmes kun lokalt i den enkelte browser (localStorage) pr. id + version.
+   Vises højst én meddelelse ad gangen: den første aktive, som brugeren ikke har set i den version. */
+var INFO_POPUP_CONFIG = {
+  AKTIV: true,
+  STORAGE_NOEGLE: 'lyg_begynder_infopopup_set',
+  FORSINKELSE_MS: 900,
+  mærke: 'Lyngbygaard Golf',
+  lukKnap: 'Luk',
+  meddelelser: [
+    { id: 'vinter', version: 1, aktiv: true,
+      titel: 'Vi er her hele vinteren!',
+      tekst: [
+        'Selvom golfsæsonen går på hæld, er der stadig liv på Lyngbygaard.',
+        'Kontoret og Brasseriet holder åbent hele vinteren og står klar til at hjælpe og servicere dig.',
+        'Kig forbi – vi glæder os til at se dig!'
+      ],
+      afslutning: 'Lyngbygaard Golf – fællesskab året rundt.' }
+  ]
+};
+(function(){
+  var C = INFO_POPUP_CONFIG;
+  if (!C || !C.AKTIV) return;
+  var box = document.getElementById('infopopup'); if (!box) return;
+  function laes(){ try { return JSON.parse(localStorage.getItem(C.STORAGE_NOEGLE) || '{}') || {}; } catch(e){ return {}; } }
+  function gem(m){ try { var s = laes(); s[m.id] = m.version; localStorage.setItem(C.STORAGE_NOEGLE, JSON.stringify(s)); } catch(e){} }
+  var set = laes(), valgt = null;
+  for (var i = 0; i < C.meddelelser.length; i++) {
+    var m = C.meddelelser[i];
+    if (m && m.aktiv && set[m.id] !== m.version) { valgt = m; break; }
+  }
+  if (!valgt) return;
+  var foerFokus = null;
+  function luk(){
+    if (!box.classList.contains('vis')) return;
+    box.classList.remove('vis'); box.setAttribute('aria-hidden','true');
+    document.documentElement.style.overflow = ''; document.removeEventListener('keydown', taste, true);
+    gem(valgt);
+    try { if (foerFokus && foerFokus.focus) foerFokus.focus(); } catch(e){}
+  }
+  function taste(e){
+    if (e.key === 'Escape') { e.preventDefault(); luk(); return; }
+    if (e.key === 'Tab') {
+      var f = [document.getElementById('ip-x'), document.getElementById('ip-luk')];
+      var i = f.indexOf(document.activeElement);
+      e.preventDefault(); f[(i + (e.shiftKey ? f.length - 1 : 1)) % f.length].focus();
+    }
+  }
+  function vis(){
+    if (document.getElementById('video-modal') && document.getElementById('video-modal').classList.contains('vis')) { setTimeout(vis, 1500); return; }
+    document.getElementById('ip-maerke').textContent = C.mærke;
+    document.getElementById('ip-titel').textContent = valgt.titel;
+    var k = document.getElementById('ip-krop'); k.textContent = '';
+    valgt.tekst.forEach(function(t){ var p = document.createElement('p'); p.textContent = t; k.appendChild(p); });
+    if (valgt.afslutning) { var a = document.createElement('p'); a.className = 'ip-sign'; a.textContent = valgt.afslutning; k.appendChild(a); }
+    document.getElementById('ip-luk').textContent = C.lukKnap;
+    foerFokus = document.activeElement;
+    box.classList.add('vis'); box.setAttribute('aria-hidden','false');
+    document.documentElement.style.overflow = 'hidden';
+    document.addEventListener('keydown', taste, true);
+    setTimeout(function(){ try { document.getElementById('ip-luk').focus({preventScroll:true}); } catch(e){} }, 50);
+  }
+  document.getElementById('ip-x').addEventListener('click', luk);
+  document.getElementById('ip-luk').addEventListener('click', luk);
+  box.addEventListener('click', function(e){ if (e.target === box) luk(); });
+  setTimeout(vis, C.FORSINKELSE_MS || 0);
 })();
 </script>
 <script src="./golfstart-widget.js" defer></script>

@@ -1878,9 +1878,24 @@ body { font-size: 16px; -webkit-font-smoothing: antialiased; }
 .hs-velk .hero-cta-primær{min-height:48px;display:flex;align-items:center;justify-content:center;font-size:14px}
 .hs-velk .hero-cta-sekundær{min-height:48px;display:flex;align-items:center;justify-content:center;font-size:14px;background:#fff;color:#1a3d1a;border:1.5px solid #1a3d1a}
 @media(prefers-reduced-motion:reduce){.hs-slide,.hs-slide img,.hs-cap{animation:none}.hs-slide{opacity:0}.hs-slide:first-child{opacity:1}.hs-cap{opacity:1;transform:none}.hs-slide:not(:first-child) .hs-cap{display:none}}
-/* kun forsiden får den nye top; øvrige sider beholder den hidtidige */
-body.paa-forside .hero-gammel{display:none}
-body:not(.paa-forside) #hs-top{display:none}
+/* billedserien (#hv) er ÉN fælles komponent øverst på siderne i HERO_CONFIG.sider; her erstatter den det hidtidige banner.
+   Velkommen-teksten og knapperne under billederne (.hs-velk) vises kun på forsiden. */
+body.hero-paa .hero-gammel{display:none}
+body:not(.hero-paa) #hs-top{display:none}
+body:not(.paa-forside) .hs-velk{display:none}
+/* kompakt højde på de øvrige sider, så billederne ikke fylder for meget på mobil */
+body:not(.paa-forside) .hv{height:clamp(190px,50vw,240px);border-bottom-width:3px}
+body:not(.paa-forside) .hv-title{font-size:18px;left:16px;bottom:20px;padding:7px 10px 7px 11px;max-width:calc(100% - 28px)}
+body:not(.paa-forside) .hv-ball{width:auto;height:74%;top:13%;right:4%}
+body:not(.paa-forside) .hv-ball-mark img{max-height:60px}
+body:not(.paa-forside) .hv-copy{left:5%;bottom:11%;max-width:56%}
+body:not(.paa-forside) .hv-small{font-size:clamp(12px,3.3vw,16px)}
+body:not(.paa-forside) .hv-big{font-size:clamp(28px,9vw,40px)}
+body:not(.paa-forside) .hv-copy a{margin-top:8px;padding:8px 11px;font-size:11px}
+body:not(.paa-forside) .hv-brand{width:auto;top:8px;right:8px;padding:5px 8px 3px}
+body:not(.paa-forside) .hv-brand img{width:50px;height:38px}
+body:not(.paa-forside) .hv-brand span{font-size:10px}
+body:not(.paa-forside) .hv-dots{bottom:7px}
 /* ═══ FORBEDRINGER / SEND ET FORSLAG (konfigurerbar via --fb-*) ═══ */
 :root{--fb-groen:#1a3d1a;--fb-guld:#c9a84c;--fb-creme:#fbf8f2;--fb-kant:#e0d8cc}
 #menu-ark-fb{display:flex;gap:10px;margin-top:12px}
@@ -1985,7 +2000,7 @@ body:not(.paa-forside) #hs-top{display:none}
 @media(prefers-reduced-motion:reduce){.hv-track,.hv-slide,.hv-ball,.hv-copy,.hv-bg{animation:none!important;transition:none!important}.hv-intro .hv-ball{opacity:1;transform:none}}
 </style>
 </head>
-<body class="paa-forside">
+<body class="paa-forside hero-paa">
 
 <!-- ═══ DELT GOLFMOTIV-BIBLIOTEK (vektor-illustrationer, ingen eksterne billeder) ═══ -->
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
@@ -4675,8 +4690,11 @@ var MEDLEMSKAB_CONFIG = {
 })();
 </script>
 <script>
-// V3 FORSIDE: nye billedserie vises kun på forsiden
-(function(){var g=window.skiftSide;if(typeof g!=='function')return;window.skiftSide=function(id){document.body.classList.toggle('paa-forside',id==='velkommen');return g.apply(this,arguments)};})();
+/* BILLEDSERIE – hvilke sider viser den? Én fælles komponent (#hv) ligger øverst og flyttes aldrig, så animationen kører
+   uafbrudt, når man skifter side. Fjern et side-id fra listen for at skjule billederne dér (så vises det hidtidige banner).
+   Oversigt åbner som et ark over den aktuelle side; siderne under Oversigt-fanen (kontakt … forbedringer) er med. */
+var HERO_CONFIG = { sider: ['velkommen','forloeb','hold','tilmeld','kontakt','links','faq','naeste','ekstra','medlemskab','forslag','forbedringer'] };
+(function(){var g=window.skiftSide;if(typeof g!=='function')return;window.skiftSide=function(id){document.body.classList.toggle('paa-forside',id==='velkommen');document.body.classList.toggle('hero-paa',HERO_CONFIG.sider.indexOf(id)!==-1);return g.apply(this,arguments)};})();
 </script>
 <script>
 /* Forside-billedanimation: 1 Bold (intro med logo) · 2 Driver · 3 Bunker · 4 Putter · 5 Klubhus. Billeder og tekster som godkendt. */
@@ -4717,7 +4735,10 @@ var MEDLEMSKAB_CONFIG = {
     track.classList.add('hv-glid');
     track.style.transform='translate3d(-100%,0,0)';
   }
-  prik(0);plan(HOLD);
+  /* forindlæs og afkod alle fem billeder, så ingen overgang kan blinke; første overgang starter først, når de er klar (højst 2,5 s) */
+  var startet=false;function start(){if(startet)return;startet=true;plan(HOLD)}
+  var afkod=Object.keys(IMG).map(function(k){var im=new Image();im.src=IMG[k];return im.decode?im.decode().catch(function(){}):Promise.resolve()});
+  prik(0);Promise.all(afkod).then(start);setTimeout(start,2500);
 })();
 </script>
 <!-- ═══ INFO-POP OP (styres af INFO_POPUP_CONFIG i scriptet nedenfor) ═══ -->

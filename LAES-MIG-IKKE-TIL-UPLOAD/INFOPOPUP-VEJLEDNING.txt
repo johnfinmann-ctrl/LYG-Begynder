@@ -2,16 +2,14 @@ INFO-POP OP (meddelelse ved åbning) – SÅDAN ÆNDRER DU DEN
 ==========================================================
 Alt styres af ÉT objekt i index.html: INFO_POPUP_CONFIG (søg efter "INFO_POPUP_CONFIG").
 
-ÆNDRE TEKSTEN        Redigér "titel", "tekst" (en linje pr. afsnit) og "afslutning" i meddelelsen.
-VIS DEN IGEN         Hæv meddelelsens "version" (fx 1 -> 2). Alle ser den så én gang til.
-                     (Uden versionsskift ser hver besøgende kun beskeden én gang pr. browser.)
-SLÅ FRA / TIL        "aktiv: false" slår én meddelelse fra. "AKTIV: false" øverst slår hele funktionen fra.
-NY MEDDELELSE        Kopiér en { id:..., version:..., ... }-blok, giv den et NYT unikt "id", læg den FØRST i listen.
-                     Der vises højst én meddelelse ad gangen: den første aktive, som den besøgende ikke har set i den version.
-                     Når den er lukket, vises den næste ulæste først ved næste åbning af appen.
-FORSINKELSE          FORSINKELSE_MS (standard 900 ms efter appen er åbnet).
+HVORNÅR VISES DEN   Hver gang appen åbnes på ny (hver gang siden indlæses).
+                    Den vises IKKE, når man skifter mellem appens sider, og ikke når man kommer tilbage fra Lykkehjulet.
+                    Intet gemmes i browseren – der er ingen "vist én gang"-hukommelse.
+LUKKE               Ét tryk: "Gå til appen", X eller et tryk på den dæmpede baggrund (også Esc på computer).
 
-Vist-status gemmes kun lokalt i den enkelte browser (localStorage, nøgle: lyg_begynder_infopopup_set, som {id: version}).
-At nulstille til test: ryd webstedsdata i browseren, eller åbn i en privat fane.
-Pop op'en lukkes med X, "Luk", Esc eller tryk udenfor vinduet – og vises ikke igen i samme version.
-Den ligger over den eksisterende installationsbesked (PWA), som stadig virker uændret bagved.
+ÆNDRE TEKSTEN       Redigér "titel", "tekst" (ét afsnit pr. linje) og "afslutning". Knappens tekst: "knapTekst".
+SLÅ FRA / TIL       "AKTIV: false" slår hele funktionen fra. "aktiv: false" på en meddelelse slår kun den fra.
+NY MEDDELELSE       Kopiér en { id:..., aktiv:..., ... }-blok i "meddelelser" og læg den FØRST – den første aktive vises.
+FORSINKELSE         FORSINKELSE_MS (standard 600 ms efter appen er åbnet).
+
+Pop op'en ligger over den eksisterende installationsbesked (PWA), som er uændret.

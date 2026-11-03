@@ -1970,6 +1970,18 @@ body:not(.paa-forside) #hs-top{display:none}
 @keyframes ip-kort{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
 @media(max-width:380px){.ip-titel{font-size:23px}.ip-krop p{font-size:15px}}
 @media(prefers-reduced-motion:reduce){#infopopup.vis,.ip-kort{animation:none}}
+/* ═══ NÆSTE: medlemskaber og fællesskaber som fold-ud (genbruger mk2-stil) ═══ */
+.mk2-ind .info-kort{background:#fffdf6;border:1px solid #eadfbd;border-left:4px solid #1a3d1a;box-shadow:none;margin:12px 0 0;padding:14px 16px}
+.mk2-ind .info-kort:first-child{margin-top:8px}
+.mk2-ind .info-kort-titel{align-items:flex-start;line-height:1.3}
+.mk3-fk-liste{gap:8px}
+.mk3-fk.mk2-kat{border-color:rgba(201,168,76,.5);box-shadow:none;background:#fffaf0}
+.mk3-fk .mk2-hoved{min-height:52px;padding:8px 12px 8px 14px;background:#fffaf0;color:#1a3d1a}
+.mk3-fk .mk2-navn{font-size:15px;color:#1a3d1a;display:flex;align-items:center}
+.mk3-fk .mk2-pil{color:#8a6d1a;width:20px;height:20px}
+.mk3-fk .mk2-ind{padding:0 16px 14px}
+.mk3-fk-tekst{margin:0;font-size:14px;line-height:1.55;color:#33362d}
+.mk3-fk.mk2-aaben{border-color:#c9a84c}
 @media(prefers-reduced-motion:reduce){.hv-track,.hv-slide,.hv-ball,.hv-copy,.hv-bg{animation:none!important;transition:none!important}.hv-intro .hv-ball{opacity:1;transform:none}}
 </style>
 </head>
@@ -3196,49 +3208,71 @@ body:not(.paa-forside) #hs-top{display:none}
     <div class="sek-tag">Medlemskaber</div>
     <div class="sek-titel">Vælg det rigtige</div>
     <p class="sek-tekst" style="margin-bottom:14px">Lyngbygaard Golf tilbyder flere typer medlemskaber. Sekretariatet hjælper dig med at vælge det der passer bedst til dig.</p>
-    <div class="info-kort">
-      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="2"/><path d="M8 17l9-13"/><path d="M14.5 3.3l3 1-2 3"/></svg></span>Seniormedlemskab — kr. 9.650,–</div>
-      <div class="info-kort-tekst">For dig over 25 år. Fri adgang til alle faciliteter, gæster til nedsat pris, klubturneringer og frie bolde på Driving Range.</div>
-    </div>
-    <div class="info-kort">
-      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.3l2.5 5.6 6.1.6-4.6 4.1 1.3 6-5.3-3.2-5.3 3.2 1.3-6-4.6-4.1 6.1-.6z"/></svg></span>Intro-medlemskab 2026 — kr. 9.000,–</div>
-      <div class="info-kort-tekst">2 års kampagnemedlemskab for nye spillere der ikke tidligere har været aktive medlemmer. Frie bolde på Driving Range.</div>
-    </div>
-    <div class="info-kort">
-      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c0-4 3.2-6.5 7-6.5s7 2.5 7 6.5"/></svg></span>Ungseniormedlemskab — kr. 7.500,–</div>
-      <div class="info-kort-tekst">Er du mellem 26 og 28 år? Fuld adgang til alle faciliteter, gæster til nedsat pris og klubturneringer. Frie bolde på Driving Range.</div>
-    </div>
-    <div class="info-kort">
-      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M14.7 9.3l-1.9 5.4-5.4 1.9 1.9-5.4z"/></svg></span>Longdistancemedlemskab — kr. 6.000,–</div>
-      <div class="info-kort-tekst">For medlemmer der bor mere end 40 km fra Lyngbygaard Golf og har en anden klub som hjemmeklub.</div>
-    </div>
-    <div class="info-kort">
+    <div class="mk2-acc" data-akk-group="medlemskaber">
+<section class="mk2-kat">
+      <button type="button" class="mk2-hoved" id="mk3-9huls-h" aria-expanded="false" aria-controls="mk3-9huls-p"><span class="mk2-tal">1</span><span class="mk2-tekst"><span class="mk2-navn">9-hulsmedlemskab</span><span class="mk2-under">1 medlemskab</span></span><span class="mk2-pil" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="mk2-panel" id="mk3-9huls-p" role="region" aria-labelledby="mk3-9huls-h"><div class="mk2-ind">
+        <div class="info-kort">
       <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="20"/><path d="M6 4l10 3.2-10 3.2z"/></svg></span>9-hulsmedlemskab — kr. 5.000,–</div>
       <div class="info-kort-tekst">Fri adgang til 9-hulsbanen og alle træningsfaciliteter. DGU-kort inkluderet og rabat på 18-hulsbanen. Frie bolde på Driving Range.</div>
     </div>
-    <div class="info-kort">
+      </div></div>
+    </section>
+<section class="mk2-kat">
+      <button type="button" class="mk2-hoved" id="mk3-senior-h" aria-expanded="false" aria-controls="mk3-senior-p"><span class="mk2-tal">2</span><span class="mk2-tekst"><span class="mk2-navn">Seniormedlemskab</span><span class="mk2-under">3 medlemskaber</span></span><span class="mk2-pil" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="mk2-panel" id="mk3-senior-p" role="region" aria-labelledby="mk3-senior-h"><div class="mk2-ind">
+        <div class="info-kort">
+      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="2"/><path d="M8 17l9-13"/><path d="M14.5 3.3l3 1-2 3"/></svg></span>Seniormedlemskab — kr. 9.650,–</div>
+      <div class="info-kort-tekst">For dig over 25 år. Fri adgang til alle faciliteter, gæster til nedsat pris, klubturneringer og frie bolde på Driving Range.</div>
+    </div>
+        <div class="info-kort">
+      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.3l2.5 5.6 6.1.6-4.6 4.1 1.3 6-5.3-3.2-5.3 3.2 1.3-6-4.6-4.1 6.1-.6z"/></svg></span>Intro-medlemskab 2026 — kr. 9.000,–</div>
+      <div class="info-kort-tekst">2 års kampagnemedlemskab for nye spillere der ikke tidligere har været aktive medlemmer. Frie bolde på Driving Range.</div>
+    </div>
+        <div class="info-kort">
+      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M14.7 9.3l-1.9 5.4-5.4 1.9 1.9-5.4z"/></svg></span>Longdistancemedlemskab — kr. 6.000,–</div>
+      <div class="info-kort-tekst">For medlemmer der bor mere end 40 km fra Lyngbygaard Golf og har en anden klub som hjemmeklub.</div>
+    </div>
+      </div></div>
+    </section>
+<section class="mk2-kat">
+      <button type="button" class="mk2-hoved" id="mk3-ungdom-h" aria-expanded="false" aria-controls="mk3-ungdom-p"><span class="mk2-tal">3</span><span class="mk2-tekst"><span class="mk2-navn">Ungdom og studerende</span><span class="mk2-under">5 medlemskaber</span></span><span class="mk2-pil" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="mk2-panel" id="mk3-ungdom-p" role="region" aria-labelledby="mk3-ungdom-h"><div class="mk2-ind">
+        <div class="info-kort">
+      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c0-4 3.2-6.5 7-6.5s7 2.5 7 6.5"/></svg></span>Ungseniormedlemskab — kr. 7.500,–</div>
+      <div class="info-kort-tekst">Er du mellem 26 og 28 år? Fuld adgang til alle faciliteter, gæster til nedsat pris og klubturneringer. Frie bolde på Driving Range.</div>
+    </div>
+        <div class="info-kort">
       <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9.3L12 5l9.5 4.3L12 13.6z"/><path d="M6 11.4v4c0 1.6 2.8 3.1 6 3.1s6-1.5 6-3.1v-4"/><path d="M21.5 9.3v5.4"/></svg></span>Ynglingemedlemskab — kr. 4.825,–</div>
       <div class="info-kort-tekst">For dig mellem 18 og 25 år. Fri adgang til alle faciliteter og frie bolde på Driving Range.</div>
     </div>
-    <div class="info-kort">
+        <div class="info-kort">
       <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.2c2-1 5-1 7 0v14c-2-1-5-1-7 0z"/><path d="M20 5.2c-2-1-5-1-7 0v14c2-1 5-1 7 0z"/></svg></span>Studiemedlemskab — kr. 4.400,–</div>
       <div class="info-kort-tekst">Under fuldtidsuddannelse og under 30 år? Reduceret kontingent med fuld adgang til alle faciliteter og frie bolde på Driving Range.</div>
     </div>
-    <div class="info-kort">
-      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12h11"/><rect x="2.5" y="9" width="3" height="6" rx="1"/><rect x="18.5" y="9" width="3" height="6" rx="1"/><path d="M5.5 10.5v3M18.5 10.5v3"/></svg></span>Træningsmedlemskab inkl. DGU-kort — kr. 2.750,–</div>
-      <div class="info-kort-tekst">Adgang til træningsfaciliteter, frie bolde på Driving Range, indspilsgreens og putting green samt DGU-kort.</div>
-    </div>
-    <div class="info-kort">
+        <div class="info-kort">
       <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 14h5.7l-1 8L20 10h-6z"/></svg></span>UngFlex-medlemskab — kr. 2.500,–</div>
       <div class="info-kort-tekst">For dig mellem 18 og 25 år der allerede kan spille golf. Fri 9-hulsbane, DGU-kort, rabat på 18-hulsbanen og frie bolde på Driving Range.</div>
     </div>
-    <div class="info-kort">
+        <div class="info-kort">
       <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c0-4 3.2-6.5 7-6.5s7 2.5 7 6.5"/></svg></span>Juniormedlemskab — kr. 2.412,–</div>
       <div class="info-kort-tekst">For medlemmer mellem 12 og 18 år. Fri adgang til klubbens faciliteter og frie bolde på Driving Range.</div>
     </div>
-    <div class="info-kort">
+      </div></div>
+    </section>
+<section class="mk2-kat">
+      <button type="button" class="mk2-hoved" id="mk3-oevrige-h" aria-expanded="false" aria-controls="mk3-oevrige-p"><span class="mk2-tal">4</span><span class="mk2-tekst"><span class="mk2-navn">Øvrige medlemskaber</span><span class="mk2-under">2 medlemskaber</span></span><span class="mk2-pil" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="mk2-panel" id="mk3-oevrige-p" role="region" aria-labelledby="mk3-oevrige-h"><div class="mk2-ind">
+        <div class="info-kort">
+      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 12h11"/><rect x="2.5" y="9" width="3" height="6" rx="1"/><rect x="18.5" y="9" width="3" height="6" rx="1"/><path d="M5.5 10.5v3M18.5 10.5v3"/></svg></span>Træningsmedlemskab inkl. DGU-kort — kr. 2.750,–</div>
+      <div class="info-kort-tekst">Adgang til træningsfaciliteter, frie bolde på Driving Range, indspilsgreens og putting green samt DGU-kort.</div>
+    </div>
+        <div class="info-kort">
       <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 9 13 4 20 4c0 8-5 15-15 15z"/><path d="M5.5 18.5c2.3-3.8 5.3-6.6 9-8.4"/></svg></span>Passivt medlemskab — kr. 1.000,–</div>
       <div class="info-kort-tekst">For dig der ikke spiller aktivt, men gerne vil bevare tilknytningen til klubben.</div>
+    </div>
+      </div></div>
+    </section>
     </div>
   </div>
 
@@ -3246,21 +3280,23 @@ body:not(.paa-forside) #hs-top{display:none}
     <div class="sek-tag">Find dit fællesskab</div>
     <div class="sek-titel">Du hører til her</div>
     <p class="sek-tekst" style="margin-bottom:14px">Som nyt medlem er der masser af fællesskaber at vælge imellem. Her er de mest oplagte for nye spillere:</p>
-    <div class="info-kort">
-      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="2"/><path d="M8 17l9-13"/><path d="M14.5 3.3l3 1-2 3"/></svg></span>Dame- eller Herrefællesskabet</div>
-      <div class="info-kort-tekst">Hyggelige golfrunder, sociale arrangementer og stærkt kammeratskab. Det naturlige næste skridt for de fleste nye spillere.</div>
-    </div>
-    <div class="info-kort">
-      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="20"/><path d="M6 4l10 3.2-10 3.2z"/></svg></span>The 9'ers</div>
-      <div class="info-kort-tekst">For dig der foretrækker kortere runder på 9 huller kombineret med hyggeligt samvær. Perfekt som ny spiller.</div>
-    </div>
-    <div class="info-kort">
-      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 19h13"/><path d="M7.2 19a4.8 4.8 0 0 1 9.6 0"/><path d="M12 4v3.2M5.6 8.6l1.8 1.8M18.4 8.6l-1.8 1.8"/></svg></span>Seniorfællesskabet</div>
-      <div class="info-kort-tekst">Aktivt og inkluderende fællesskab for seniorer med golf og socialt samvær i centrum.</div>
-    </div>
-    <div class="info-kort">
-      <div class="info-kort-titel"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M9 8V6.5A2 2 0 0 1 11 4.5h2A2 2 0 0 1 15 6.5V8"/><path d="M3 13.2h18"/></svg></span>Erhvervsgolf</div>
-      <div class="info-kort-tekst">Netværk og golf for erhvervsaktive. Kombiner arbejdsliv og golfbane.</div>
+    <div class="mk2-acc mk3-fk-liste" data-akk-group="faellesskaber">
+    <section class="mk2-kat mk3-fk">
+      <button type="button" class="mk2-hoved" id="mk3-fk1-h" aria-expanded="false" aria-controls="mk3-fk1-p"><span class="mk2-tekst"><span class="mk2-navn"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="2"/><path d="M8 17l9-13"/><path d="M14.5 3.3l3 1-2 3"/></svg></span>Dame- eller Herrefællesskabet</span></span><span class="mk2-pil" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="mk2-panel" id="mk3-fk1-p" role="region" aria-labelledby="mk3-fk1-h"><div class="mk2-ind"><p class="mk3-fk-tekst">Hyggelige golfrunder, sociale arrangementer og stærkt kammeratskab. Det naturlige næste skridt for de fleste nye spillere.</p></div></div>
+    </section>
+    <section class="mk2-kat mk3-fk">
+      <button type="button" class="mk2-hoved" id="mk3-fk2-h" aria-expanded="false" aria-controls="mk3-fk2-p"><span class="mk2-tekst"><span class="mk2-navn"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="20"/><path d="M6 4l10 3.2-10 3.2z"/></svg></span>The 9'ers</span></span><span class="mk2-pil" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="mk2-panel" id="mk3-fk2-p" role="region" aria-labelledby="mk3-fk2-h"><div class="mk2-ind"><p class="mk3-fk-tekst">For dig der foretrækker kortere runder på 9 huller kombineret med hyggeligt samvær. Perfekt som ny spiller.</p></div></div>
+    </section>
+    <section class="mk2-kat mk3-fk">
+      <button type="button" class="mk2-hoved" id="mk3-fk3-h" aria-expanded="false" aria-controls="mk3-fk3-p"><span class="mk2-tekst"><span class="mk2-navn"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 19h13"/><path d="M7.2 19a4.8 4.8 0 0 1 9.6 0"/><path d="M12 4v3.2M5.6 8.6l1.8 1.8M18.4 8.6l-1.8 1.8"/></svg></span>Seniorfællesskabet</span></span><span class="mk2-pil" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="mk2-panel" id="mk3-fk3-p" role="region" aria-labelledby="mk3-fk3-h"><div class="mk2-ind"><p class="mk3-fk-tekst">Aktivt og inkluderende fællesskab for seniorer med golf og socialt samvær i centrum.</p></div></div>
+    </section>
+    <section class="mk2-kat mk3-fk">
+      <button type="button" class="mk2-hoved" id="mk3-fk4-h" aria-expanded="false" aria-controls="mk3-fk4-p"><span class="mk2-tekst"><span class="mk2-navn"><span class="ico-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M9 8V6.5A2 2 0 0 1 11 4.5h2A2 2 0 0 1 15 6.5V8"/><path d="M3 13.2h18"/></svg></span>Erhvervsgolf</span></span><span class="mk2-pil" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+      <div class="mk2-panel" id="mk3-fk4-p" role="region" aria-labelledby="mk3-fk4-h"><div class="mk2-ind"><p class="mk3-fk-tekst">Netværk og golf for erhvervsaktive. Kombiner arbejdsliv og golfbane.</p></div></div>
+    </section>
     </div>
   </div>
 
@@ -4525,14 +4561,14 @@ var MEDLEMSKAB_CONFIG = {
   var C = window.MEDLEMSKAB_CONFIG || (typeof MEDLEMSKAB_CONFIG!=='undefined' ? MEDLEMSKAB_CONFIG : null);
   var host = document.getElementById('mk2-acc'); if(!C || !host) return;
   var KAT = [
-    { id:'9huls',  navn:'9-hulsmedlemskab',      under:'Adgang til 9-hulsbanen',                 ids:['ni-huls'] },
-    { id:'senior', navn:'Seniormedlemskab',      under:'Over 25 år',                             ids:['senior'] },
-    { id:'flex',   navn:'Fleksible medlemskaber',under:'Intro, Longdistance, Træning og Passivt', ids:['intro','longdistance','traening','passiv'] },
-    { id:'unge',   navn:'Unge og juniorer',      under:'Ungsenior, Yngling, Junior og Studie',   ids:['ungsenior','yngling','junior','studie'] }
+    { id:'9huls',   navn:'9-hulsmedlemskab',     under:'Adgang til 9-hulsbanen',                          ids:['ni-huls'] },
+    { id:'senior',  navn:'Seniormedlemskab',     under:'Senior, Intro og Longdistance',                   ids:['senior','intro','longdistance'] },
+    { id:'ungdom',  navn:'Ungdom og studerende', under:'Ungsenior, Yngling, Studie, UngFlex og Junior',   ids:['ungsenior','yngling','studie','ungflex','junior'] },
+    { id:'oevrige', navn:'Øvrige medlemskaber',  under:'Træning og Passivt',                              ids:['traening','passiv'] }
   ];
-  /* medlemskaber, der ikke passer i de fire kategorier – vises særskilt, slettes ikke */
-  var ANDRE = { id:'andre', navn:'Medlemskaber uden for de fire grupper', under:'UngFlex og Begyndermedlemskab', ids:['ungflex','begynder'],
-    intro:'Disse to medlemskaber findes i appen, men passer ikke i de fire grupper. De vises derfor her.' };
+  /* medlemskab, der ikke er nævnt i de fire kategorier – vises særskilt, slettes ikke */
+  var ANDRE = { id:'andre', navn:'Medlemskab uden for de fire grupper', under:'Begyndermedlemskab', ids:['begynder'],
+    intro:'Dette medlemskab findes i appen, men er ikke placeret i de fire grupper. Det vises derfor her.' };
   var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
   var byId={}; C.medlemskaber.forEach(function(m){ byId[m.id]=m; });
   function el(tag,cls,txt){ var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
@@ -4607,6 +4643,38 @@ var MEDLEMSKAB_CONFIG = {
 })();
 </script>
 <script>
+/* Fold-ud for statisk markup (siden "Næste": medlemskaber og fællesskaber). Hele overskriftsrækken er knappen; kun én åben pr. gruppe; alt lukket ved start. */
+(function(){
+  var grupper=[].slice.call(document.querySelectorAll('[data-akk-group]')); if(!grupper.length) return;
+  function sæt(k,aaben,straks){
+    var h=k.querySelector('.mk2-hoved'),p=k.querySelector('.mk2-panel');
+    h.setAttribute('aria-expanded',String(aaben));
+    if(aaben){ k.classList.add('mk2-aaben'); if(straks){p.style.height='auto';return}
+      p.style.height=p.scrollHeight+'px';
+      var klar=function(e){ if(e&&e.target!==p) return; p.removeEventListener('transitionend',klar); if(k.classList.contains('mk2-aaben')) p.style.height='auto'; };
+      p.addEventListener('transitionend',klar); setTimeout(klar,450);
+    } else {
+      if(straks){ k.classList.remove('mk2-aaben'); p.style.height='0px'; return }
+      p.style.height=p.scrollHeight+'px'; void p.offsetHeight; k.classList.remove('mk2-aaben'); p.style.height='0px';
+    }
+  }
+  grupper.forEach(function(g){
+    var kort=[].slice.call(g.querySelectorAll('.mk2-kat'));
+    kort.forEach(function(k){
+      k.querySelector('.mk2-hoved').addEventListener('click',function(){
+        var aaben=!k.classList.contains('mk2-aaben');
+        kort.forEach(function(o){ if(o!==k && o.classList.contains('mk2-aaben')) sæt(o,false); });
+        sæt(k,aaben);
+        if(aaben) setTimeout(function(){ var r=k.getBoundingClientRect(); if(r.top<70||r.top>window.innerHeight*0.5) k.scrollIntoView({behavior:'smooth',block:'start'}); },340);
+      });
+    });
+    g.akkLukAlle=function(){ kort.forEach(function(k){ if(k.classList.contains('mk2-aaben')) sæt(k,false,true); }); };
+  });
+  var gammel=window.skiftSide;
+  if(typeof gammel==='function') window.skiftSide=function(id){ if(id!=='naeste') grupper.forEach(function(g){ g.akkLukAlle&&g.akkLukAlle(); }); return gammel.apply(this,arguments); };
+})();
+</script>
+<script>
 // V3 FORSIDE: nye billedserie vises kun på forsiden
 (function(){var g=window.skiftSide;if(typeof g!=='function')return;window.skiftSide=function(id){document.body.classList.toggle('paa-forside',id==='velkommen');return g.apply(this,arguments)};})();
 </script>
@@ -4663,21 +4731,20 @@ var MEDLEMSKAB_CONFIG = {
 </div>
 <script>
 /* ═══════════════ INFO-POP OP – sådan bruger du den ═══════════════
-   1) Ændre teksten:        redigér en meddelelse nedenfor (titel / tekst / afslutning).
-   2) Vis den igen:         hæv meddelelsens "version" (fx fra 1 til 2) – så ser alle den én gang til.
-   3) Slå den fra/til:      sæt "aktiv" til false/true – enten for hele funktionen (AKTIV) eller for én meddelelse.
-   4) Ny meddelelse:        kopiér en blok i "meddelelser", giv den et nyt, unikt "id", og læg den FØRST i listen.
-   Vist-status gemmes kun lokalt i den enkelte browser (localStorage) pr. id + version.
-   Vises højst én meddelelse ad gangen: den første aktive, som brugeren ikke har set i den version. */
+   Vises ved HVER åbning af appen (hver gang siden indlæses), men ikke når man skifter mellem appens sider
+   og ikke når man vender tilbage fra Lykkehjulet (lykkehjul.html -> "Tilbage til appen").
+   1) Ændre teksten:     redigér "titel", "tekst" (ét afsnit pr. linje) og "afslutning" nedenfor. Knappens tekst: "knapTekst".
+   2) Slå fra/til:       AKTIV: false slår hele funktionen fra; "aktiv: false" slår én meddelelse fra.
+   3) Ny meddelelse:     kopiér en { id:..., aktiv:..., ... }-blok og læg den FØRST i listen – den første aktive meddelelse vises.
+   Intet gemmes i browseren; der er ingen "vist én gang"-hukommelse. */
 var INFO_POPUP_CONFIG = {
   AKTIV: true,
-  STORAGE_NOEGLE: 'lyg_begynder_infopopup_set',
-  FORSINKELSE_MS: 900,
+  FORSINKELSE_MS: 600,
   mærke: 'Lyngbygaard Golf',
-  lukKnap: 'Luk',
+  knapTekst: 'Gå til appen',
   meddelelser: [
-    { id: 'vinter', version: 1, aktiv: true,
-      titel: 'Vi er her hele vinteren!',
+    { id: 'vinter', aktiv: true,
+      titel: 'Vi er her hele vinteren! ⛳',
       tekst: [
         'Selvom golfsæsonen går på hæld, er der stadig liv på Lyngbygaard.',
         'Kontoret og Brasseriet holder åbent hele vinteren og står klar til at hjælpe og servicere dig.',
@@ -4690,21 +4757,17 @@ var INFO_POPUP_CONFIG = {
   var C = INFO_POPUP_CONFIG;
   if (!C || !C.AKTIV) return;
   var box = document.getElementById('infopopup'); if (!box) return;
-  function laes(){ try { return JSON.parse(localStorage.getItem(C.STORAGE_NOEGLE) || '{}') || {}; } catch(e){ return {}; } }
-  function gem(m){ try { var s = laes(); s[m.id] = m.version; localStorage.setItem(C.STORAGE_NOEGLE, JSON.stringify(s)); } catch(e){} }
-  var set = laes(), valgt = null;
-  for (var i = 0; i < C.meddelelser.length; i++) {
-    var m = C.meddelelser[i];
-    if (m && m.aktiv && set[m.id] !== m.version) { valgt = m; break; }
-  }
+  /* kommer man tilbage fra Lykkehjulet (en del af appen), vises den ikke igen */
+  try { if (/\/lykkehjul\.html(\?|#|$)/.test(document.referrer || '')) return; } catch(e){}
+  var valgt = null;
+  for (var i = 0; i < C.meddelelser.length; i++) { if (C.meddelelser[i] && C.meddelelser[i].aktiv) { valgt = C.meddelelser[i]; break; } }
   if (!valgt) return;
-  var foerFokus = null;
+  var foerFokus = null, vist = false;
   function luk(){
     if (!box.classList.contains('vis')) return;
     box.classList.remove('vis'); box.setAttribute('aria-hidden','true');
     document.documentElement.style.overflow = ''; document.removeEventListener('keydown', taste, true);
-    gem(valgt);
-    try { if (foerFokus && foerFokus.focus) foerFokus.focus(); } catch(e){}
+    try { if (foerFokus && foerFokus.focus) foerFokus.focus({preventScroll:true}); } catch(e){}
   }
   function taste(e){
     if (e.key === 'Escape') { e.preventDefault(); luk(); return; }
@@ -4715,13 +4778,13 @@ var INFO_POPUP_CONFIG = {
     }
   }
   function vis(){
-    if (document.getElementById('video-modal') && document.getElementById('video-modal').classList.contains('vis')) { setTimeout(vis, 1500); return; }
+    if (vist) return; vist = true;
     document.getElementById('ip-maerke').textContent = C.mærke;
     document.getElementById('ip-titel').textContent = valgt.titel;
     var k = document.getElementById('ip-krop'); k.textContent = '';
     valgt.tekst.forEach(function(t){ var p = document.createElement('p'); p.textContent = t; k.appendChild(p); });
     if (valgt.afslutning) { var a = document.createElement('p'); a.className = 'ip-sign'; a.textContent = valgt.afslutning; k.appendChild(a); }
-    document.getElementById('ip-luk').textContent = C.lukKnap;
+    document.getElementById('ip-luk').textContent = C.knapTekst;
     foerFokus = document.activeElement;
     box.classList.add('vis'); box.setAttribute('aria-hidden','false');
     document.documentElement.style.overflow = 'hidden';
@@ -4731,6 +4794,7 @@ var INFO_POPUP_CONFIG = {
   document.getElementById('ip-x').addEventListener('click', luk);
   document.getElementById('ip-luk').addEventListener('click', luk);
   box.addEventListener('click', function(e){ if (e.target === box) luk(); });
+  /* vises én gang pr. indlæsning – skift mellem appens sider genindlæser ikke siden */
   setTimeout(vis, C.FORSINKELSE_MS || 0);
 })();
 </script>

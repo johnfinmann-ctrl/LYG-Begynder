@@ -39,3 +39,15 @@ TESTET (medlemskab)  116/116 bestået på iPhone (390), iPhone SE (320), iPad (8
 TESTET (billedanimation)  Alle fem billeder vist og kontrolleret visuelt på iPhone (390), iPad (820) og pc (1280): hvert billede fuldt synligt i realtid, øvrige skjult, korrekt tekst og prik, looper tilbage til slide 1, knappen åbner Forløbet, ingen vandret overflow, ingen JS-fejl. Helapp-regression (efter medlemskabsændringen) 57/57 og mobiltest (tilbageknap + AI-panel) 36/36 bestået.
 
 SIKKERHED (lykkehjul)  Ingen beskyttelse mod gentagne udtræk findes (hverken lokal eller server); lokal beskyttelse kunne ikke forhindre snyd på tværs af enheder. Se LYKKEHJUL-SIKKERHED.txt.
+
+
+F. SLIDE 2 (DRIVER) - NY BAGGRUND (3. nov, godkendt)
+- Kun billedet på slide 2 'Dit første slag starter her' er ændret: driver, bold, tee og slagbevægelse er de oprindelige motiver, frilagt og lagt oven på klubhusfotoet fra Lyngbygaard Golf. Der er ikke genereret nye billeder.
+- Slide 1, 3, 4 og 5 er byte-for-byte uændrede (kontrolleret mod versionen før ændringen). Tekster, logo, 4 s/1 s timing og alle funktioner uændrede.
+- Billedfilen ligger også separat: billeder/billede-2-driver-klubhus.jpg (1064x669).
+- Tests: billedserie på tværs af sider 58/58, pop op og hero 62/62, timing 39/39, fuld regression 57/57.
+
+G. SLIDE 4 (PUTTER) - NYT BILLEDE (3. nov, efter anmodning)
+- Kun billedet på slide 4 'Lær spillet i dit eget tempo' er erstattet med det af brugeren leverede billede (ren fil uden tekst/logo, skaleret til 1200 px bredde, ikke strakt): billeder/billede-4-putter-solnedgang.jpg.
+- Slide 1, 2, 3 og 5 byte-for-byte uændrede. Rækkefølge, 4 s/1 s timing og alle funktioner uændrede.
+- Tests: billedserie 58/58, pop op og hero 62/62, timing 39/39, fuld regression 57/57.

@@ -1,19 +1,17 @@
-UPLOADLISTE – LYG-BEGYNDER KOMPLET V5.2 (kontrolleret 4. nov 2026)
+UPLOADLISTE – LYG-BEGYNDER KOMPLET V5.2 (opdateret 6. nov 2026, med velkomstanimation)
 ====================================================================
 DENNE MAPPE (LAES-MIG-IKKE-TIL-UPLOAD) SKAL IKKE UPLOADES.
 
-DE FIRE ÆNDREDE FILER (skal ligge i roden af repoet, alle fire sammen):
-  index.html               md5 94c3752daa960c7e8e32de1715cb7d38
+SKAL UPLOADES NU (kun denne ene fil er ændret siden den version, der ligger på GitHub):
+  index.html   md5 f21d6f70aabeb6c84c475456cac10d3e
+  (indeholder velkomstanimationen; nyt driver- og putterbillede og alt det øvrige lå allerede på GitHub)
+
+UÆNDRET – skal ikke uploades igen (identisk med GitHub 4. nov):
   lykkehjul.html           md5 0b6f4eb1b967356740816b408c1279d4
   golfstart-chat.html      md5 5c893f54a71ecb95684e26ffc35c7b99
   golfstart-widget.js      md5 bd7a223de8ffb04aa1ad690267311a0e
+  golfstart-chat.js        md5 16a8c2d2282b345dc928b2a258a2d610
+  sponsor-strip.js         md5 f38e69bc99ad8f3ba8999bad5f3e7752
+  lyg-begynder-velkomst.mp4, graduation-golf.png, lykkehjul-demo.html, golfstart-test-*.html/js, golfstart-v3-test.html, README.md, VEJLEDNING.txt, tjek-lykkehjul.sh
 
-HVORFOR HVER FIL ER MED
- index.html           Forsiden: de fem billeder (nyt driverbillede, nyt putterbillede), pop op, medlemskaber, Oversigt.
- lykkehjul.html       NØDVENDIG: index.html åbner den fra 'Drej & vind' (menu og forsidekort). Uden den giver knappen en fejlside.
- golfstart-chat.html  GolfStart AI på mobil (V2.2): panel under iPhones statuslinje, genveje i to kolonner, luk-knap 44 px. Ikke nødvendig for forsiden, men rettelsen er ønsket; uden den dækker AI-panelet statuslinjen (målt: top 18 px, skal være >= 47).
- golfstart-widget.js  Hører sammen med golfstart-chat.html (panelets højde/placering).
-
-UÆNDREDE FILER (behøver ikke uploades igen; identiske med dem på GitHub): golfstart-chat.js, sponsor-strip.js, lyg-begynder-velkomst.mp4, graduation-golf.png, lykkehjul-demo.html, golfstart-test-*.html/js, golfstart-v3-test.html, README.md, VEJLEDNING.txt, tjek-lykkehjul.sh.
-
-STATUS 4. nov: de fire filer på GitHub (main) er allerede byte-for-byte identiske med disse. Der skal kun uploades igen, hvis filerne ændres.
+HUSK: Er index.html på GitHub Pages først opdateret, kan en telefon vise den gamle version til siden genindlæses.

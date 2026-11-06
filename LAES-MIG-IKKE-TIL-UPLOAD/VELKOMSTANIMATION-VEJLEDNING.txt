@@ -1,0 +1,20 @@
+VELKOMSTANIMATION – VEJLEDNING (index.html)
+==========================================
+Alt styres af LYG_INTRO_CONFIG i scriptet lige efter <body> i index.html (søg efter LYG_INTRO_CONFIG).
+
+SLÅ FRA / TIL
+  VIS_ANIMATION: false   -> ingen animation; appen og pop op'en starter som før.
+  VIS_ANIMATION: true    -> vises ved hver ny åbning af appen (ikke ved sideskift).
+
+TIDER (ændres sammen med CSS-keyframes, hvis animationen skal gøres hurtigere/langsommere)
+  VARIGHED_MS 6300       samlet længde (CSS: 6,3 s)
+  TONE_MS 5600           hvornår den toner ud til Velkommen; billedserien og pop op'en følger efter
+  NOEDSTOP_MS 9000       animationen fjernes senest her, uanset hvad
+
+FOTO OG BOLD
+  FOTO og BOLD er indlejrede billeder (data-URL). De kan erstattes med en anden data-URL eller en filsti, fx "velkomst-foto.jpg".
+  Foto: ægte Lyngbygaard-foto (klubhus og bane). Bold: bold med Lyngbygaard-logo. Hold fotoet liggende som landskab; udsnittet styres af 32% 50% i CSS (.i-foto).
+
+HVAD DEN IKKE GØR
+  Ingen lyd. Ingen gentagelse ved sideskift. Ingen animation, når man kommer tilbage fra Lykkehjulet. Blokerer aldrig appen (nødstop efter ca. 9 s).
+  Bemærk: En hjemmeskærms-app på iPhone/iPad, der genoptages uden at blive genindlæst, viser ikke animationen igen (samme som pop op'en).

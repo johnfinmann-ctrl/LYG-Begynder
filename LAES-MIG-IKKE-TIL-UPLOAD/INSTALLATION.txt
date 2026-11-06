@@ -1,3 +1,5 @@
+OPDATERET 6. nov: Se UPLOADLISTE.txt – den gælder først. Nu er det kun index.html, der skal uploades (velkomstanimationen); de øvrige tre filer nævnt nedenfor ligger allerede på GitHub og er uændrede.
+
 LYG-BEGYNDER KOMPLET V5.2 – INSTALLATIONSVEJLEDNING (GitHub Pages)
 ==================================================================
 ZIP'ens rod svarer 1:1 til roden i GitHub-repoet johnfinmann-ctrl/LYG-Begynder.

@@ -1,0 +1,162 @@
+════════════════════════════════════════════════════════════
+EBELTOFT GOLF CLUB – AI Chatbot v1.3
+Installationsvejledning
+Udviklet af Nordic Operations
+════════════════════════════════════════════════════════════
+
+INDHOLD AF ZIP-FIL
+  egc-chatbot-v13.html          Standalone testside + chatbot UI
+  egc-chatbot-worker-v13.js     Cloudflare Worker (AI-backend)
+  INSTALLATIONSVEJLEDNING.txt   Denne vejledning
+
+
+──────────────────────────────────────────────────────────
+DEL 1 – HVAD KAN TESTES UDEN CLOUDFLARE
+──────────────────────────────────────────────────────────
+
+Åbn egc-chatbot-v13.html direkte i en browser (Chrome/Edge/Firefox).
+
+✓ Animation 1   Golf bold ruller ind → chat-knap (sideload)
+✓ Animation 2   Langsom Ken Burns panorama i header (8 sek. skift, blød fade)
+✓ Animation 3   Golf bold ruller i hul ved kategori-klik
+✓ Animation 4   3 golfbolde som tænke-animation (AI waiting)
+✓ Animation 5   Kategori-kort zoom + guldeffekt ved hover
+✓ Animation 6   Golf bold ruller ud når chatbot lukkes
+
+✓ Sprogskift           DA / EN / DE
+✓ FAQ-fallback svar    Aktiveres automatisk (ingen Worker nødvendig)
+✓ Åbn / Luk chatbot
+✓ ESC lukker chatbot
+✓ Tastatur-navigation
+✓ prefers-reduced-motion (alle animationer deaktiveres automatisk)
+✓ Mobil (< 480px), tablet og computer
+✓ Aria-labels / skærmlæser-venlig
+
+BEMÆRK: Uden Worker bruges FAQ-fallback automatisk.
+Det giver svar på de 4 kategorier + generel kontaktinfo.
+
+
+──────────────────────────────────────────────────────────
+DEL 2 – CLOUDFLARE WORKER INSTALLATION (5 trin)
+──────────────────────────────────────────────────────────
+
+Krav: Gratis Cloudflare-konto (ingen betalingskort, ingen betalt plan)
+
+TRIN 1 – Opret Worker
+  a. Gå til: https://dash.cloudflare.com
+  b. Vælg: Workers & Pages → Create Worker
+  c. Giv Worker et navn, fx: egc-chatbot
+  d. Kopier hele indholdet af egc-chatbot-worker-v13.js ind
+  e. Klik Deploy
+
+TRIN 2 – Tilknyt AI-binding (PÅKRÆVET)
+  a. Gå til Worker → Settings → Bindings
+  b. Klik "Add Binding"
+  c. Type: Workers AI
+  d. Variable name: AI          ← Skal skrives præcis sådan
+  e. Gem
+
+TRIN 3 – Rate Limiting med KV (ANBEFALET)
+  a. Gå til: Workers & Pages → KV → Create Namespace
+  b. Navn: RATE_LIMIT
+  c. Gå tilbage til Worker → Settings → Bindings → Add Binding
+  d. Type: KV Namespace
+  e. Variable name: RATE_LIMIT
+  f. Namespace: Vælg "RATE_LIMIT"
+  g. Gem
+
+  Uden KV er rate limiting deaktiveret (FAQ-fallback stadig aktiv).
+
+TRIN 4 – CORS-begrænsning (ANBEFALET)
+  a. Gå til Worker → Settings → Variables → Add Variable
+  b. Name: ALLOWED_ORIGIN
+  c. Value: https://www.ebeltoft-golfclub.dk
+  d. Gem og redeploy
+
+  Uden dette accepteres forespørgsler fra alle domæner.
+  CORS er ikke eneste sikkerhed – rate limiting og AI-binding
+  beskytter også mod misbrug.
+
+TRIN 5 – Opdatér HTML-filen
+  a. Åbn egc-chatbot-v13.html i en teksteditor
+  b. Find linjen (ca. linje 480):
+       const CFG = {
+         WORKER_URL: 'https://egc-chatbot.YOUR-SUBDOMAIN.workers.dev',
+  c. Erstat URL med din Worker-URL (kopiér fra Cloudflare)
+  d. Gem filen
+
+
+──────────────────────────────────────────────────────────
+DEL 3 – TILFØJ RIGTIGE EGC-BILLEDER
+──────────────────────────────────────────────────────────
+
+Panorama-sektionen bruger grønne gradients som placeholder.
+Erstat med egne EGC-fotos:
+
+  1. Åbn egc-chatbot-v13.html i en teksteditor
+  2. Find de tre <div class="pano-slide ..."> elementer
+  3. Skift style-attributten fra:
+       style="background: linear-gradient(...)"
+     til:
+       style="background-image: url('egc-foto-1.jpg')"
+
+  4. Placer billederne i samme mappe som HTML-filen
+  5. Anbefalet billedformat: JPG, min. 800×200 px, max 150 KB
+
+VIGTIGT: Brug KUN autentiske EGC-billeder.
+         Brug ikke billeder fra andre golfklubber.
+
+
+──────────────────────────────────────────────────────────
+DEL 4 – INTEGRATION PÅ EKSISTERENDE HJEMMESIDE
+──────────────────────────────────────────────────────────
+
+CHATBOTTEN ER UDVIKLET SOM EN SEPARAT KOMPONENT.
+Test og godkend v1.3 fuldt ud FØR integration.
+
+Når klar til integration i ebeltoft_golf_club.html:
+
+  1. CSS: Kopier alt mellem /* DESIGN TOKENS */ og /* RESET */
+     samt alle chat-relaterede CSS-klasser ind i hoved-CSS.
+
+  2. HTML: Kopier <div id="chat-bubble"> ... </div>
+     til bunden af <body> i hoved-HTML-filen.
+
+  3. JavaScript: Kopier <script>-blokken (uden <script>-tags)
+     til hoved-JS-sektionen.
+
+  4. Fjern testside-HTML (.demo-wrap) – den bruges kun til test.
+
+
+──────────────────────────────────────────────────────────
+DEL 5 – CLOUDFLARE GRATIS PLAN LIMITS
+──────────────────────────────────────────────────────────
+
+Workers AI (gratis):
+  • 10.000 Neurons / dag
+  • Llama 3.2 3B: ca. 10 Neurons pr. 1.000 tokens output
+  • Svarer til ca. 500–1.000 AI-svar / dag ved normale spørgsmål
+
+Når daglig grænse er nået:
+  • Worker returnerer status 429
+  • Chatbot aktiverer automatisk FAQ-fallback
+  • Brugeren informeres på sit eget sprog
+  • Ingen fejlmeddelelse til Cloudflare – ingen ekstra omkostning
+
+Workers (gratis):
+  • 100.000 requests / dag
+  • Ingen timeout for Workers AI-kald på gratis plan
+
+KV (gratis):
+  • 100.000 læsninger / dag · 1.000 skrivninger / dag
+  • Rate limit-tæller bruger ca. 2 KV-writes pr. forespørgsel
+
+
+──────────────────────────────────────────────────────────
+KONTAKT OG SUPPORT
+──────────────────────────────────────────────────────────
+
+Udviklet af Nordic Operations
+Enkle AI-løsninger til rigtige operationer
+
+════════════════════════════════════════════════════════════

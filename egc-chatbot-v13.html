@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGC AI Assistent v1.3 – Testside</title>
+<style>
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS – Ebeltoft Golf Club
+═══════════════════════════════════════════════════ */
+:root {
+  --g-dark:   #1a2e1a;
+  --g-mid:    #2a4a2a;
+  --g-light:  #3d6b3d;
+  --gold:     #c8a84b;
+  --gold-l:   #e2c97e;
+  --gold-dim: rgba(200,168,75,0.18);
+  --sand:     #f5f0e8;
+  --sand-d:   #e0d8c8;
+  --txt:      #1a1a1a;
+  --txt-m:    #4a4a4a;
+  --white:    #ffffff;
+  --r:        12px;
+  --rl:       18px;
+  --shadow:   0 24px 80px rgba(0,0,0,0.28), 0 0 0 1px rgba(200,168,75,0.22);
+  --t:        all 0.22s ease;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESET
+═══════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+textarea{font-family:inherit}
+
+/* ═══════════════════════════════════════════════════
+   TESTSIDE BAGGRUND
+═══════════════════════════════════════════════════ */
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: radial-gradient(ellipse at 30% 20%, #0d1f0d 0%, #1a2e1a 50%, #0a150a 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.demo-wrap {
+  text-align: center;
+  padding: 48px 24px;
+  max-width: 560px;
+}
+.demo-emblem {
+  width: 76px; height: 76px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-l) 100%);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 32px rgba(200,168,75,0.35);
+}
+.demo-emblem svg { width: 40px; height: 40px; }
+.demo-wrap h1 {
+  font-size: clamp(20px, 4vw, 28px);
+  color: var(--gold);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.demo-wrap .sub {
+  color: rgba(255,255,255,0.55);
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 28px;
+}
+.demo-box {
+  background: rgba(200,168,75,0.07);
+  border: 1px solid rgba(200,168,75,0.3);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  text-align: left;
+  font-family: Arial, sans-serif;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 10px;
+}
+.demo-box strong { color: var(--gold); display: block; margin-bottom: 8px; font-size: 13px; }
+.demo-box .ok  { color: #6eca6e; }
+.demo-box .req { color: #e2c97e; }
+.demo-hint {
+  color: rgba(255,255,255,0.3);
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  margin-top: 20px;
+}
+
+/* ═══════════════════════════════════════════════════
+   CHAT BUBBLE CONTAINER
+═══════════════════════════════════════════════════ */
+#chat-bubble {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  /* Skjul ved init – roll-in animation starter den */
+  opacity: 0;
+}
+#chat-bubble.ready { opacity: 1; }
+
+/* ─── Golf-bold knap ──────────────────────────── */
+.chat-btn {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  border: 2.5px solid var(--gold);
+  background: var(--g-dark);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 36px rgba(0,0,0,0.5);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  position: relative;
+}
+.chat-btn:hover {
+  box-shadow: 0 8px 36px rgba(0,0,0,0.5), 0 0 0 7px rgba(200,168,75,0.18);
+  transform: scale(1.06);
+}
+.chat-btn:active { transform: scale(0.96); }
+.chat-btn-icon { width: 34px; height: 34px; display: block; }
+
+.chat-dot {
+  position: absolute;
+  top: 2px; right: 2px;
+  width: 14px; height: 14px;
+  background: var(--gold);
+  border-radius: 50%;
+  border: 2.5px solid var(--g-dark);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.25); opacity: 0.75; }
+}
+
+/* ═══════════════════════════════════════════════════
+   ANIMATION 1 – Golf bold ruller ind (åbning)
+   ANIMATION 6 – Golf bold ruller ud (lukning)
+═══════════════════════════════════════════════════ */
+@keyframes roll-in {
+  0%   { transform: translateX(140px) rotate(0deg)   scale(0.25); opacity: 0; }
+  55%  { transform: translateX(-10px) rotate(400deg) scale(1.1);  opacity: 1; }
+  75%  { transform: translateX(5px)   rotate(415deg) scale(0.96); }
+  100% { transform: translateX(0)     rotate(360deg) scale(1);    opacity: 1; }
+}
+@keyframes roll-out {
+  0%   { transform: translateX(0)     rotate(0deg)    scale(1);   opacity: 1; }
+  100% { transform: translateX(150px) rotate(-380deg) scale(0.2); opacity: 0; }
+}
+.chat-btn.anim-in  { animation: roll-in  0.85s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+.chat-btn.anim-out { animation: roll-out 0.5s ease-in forwards; }
+
+/* ═══════════════════════════════════════════════════
+   CHAT VINDUE
+═══════════════════════════════════════════════════ */
+.chat-win {
+  position: absolute;
+  bottom: 76px; right: 0;
+  width: 372px;
+  max-width: calc(100vw - 44px);
+  background: var(--white);
+  border-radius: var(--rl);
+  box-shadow: var(--shadow);
+  display: flex; flex-direction: column;
+  max-height: 590px;
+  overflow: hidden;
+  transform-origin: bottom right;
+  /* Lukket tilstand */
+  transform: scale(0.82) translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1), opacity 0.26s ease;
+}
+.chat-win.open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ═══════════════════════════════════════════════════
+   ANIMATION 2 – Langsom panorama i header (Ken Burns)
+   Skift hvert 8. sekund med blød fade
+═══════════════════════════════════════════════════ */
+.chat-hd {
+  position: relative;
+  height: 92px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pano-slide {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+.pano-slide.active { opacity: 1; }
+
+/* Ken Burns varianter – rolig, ikke distraherende */
+@keyframes kb-pan-right {
+  0%   { transform: scale(1.06) translateX(-1.5%); }
+  100% { transform: scale(1.0)  translateX(1.5%); }
+}
+@keyframes kb-pan-left {
+  0%   { transform: scale(1.0)  translateX(1.5%); }
+  100% { transform: scale(1.07) translateX(-1.5%); }
+}
+@keyframes kb-zoom-in {
+  0%   { transform: scale(1.0) translateX(0); }
+  100% { transform: scale(1.08) translateX(0); }
+}
+.pano-slide:nth-child(1) { animation: kb-pan-right 24s ease-in-out infinite alternate; }
+.pano-slide:nth-child(2) { animation: kb-pan-left  24s ease-in-out infinite alternate; }
+.pano-slide:nth-child(3) { animation: kb-zoom-in   24s ease-in-out infinite alternate; }
+
+.hd-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(8,18,8,0.5) 0%,
+    rgba(8,18,8,0.75) 100%);
+  pointer-events: none;
+}
+.hd-content {
+  position: absolute; inset: 0;
+  display: flex; align-items: center;
+  padding: 14px 16px;
+  gap: 11px;
+}
+.hd-av {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-l) 100%);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.25);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.hd-av svg { width: 22px; height: 22px; }
+.hd-info { flex: 1; min-width: 0; }
+.hd-info h4 {
+  color: #fff; font-size: 15px; font-weight: 600;
+  letter-spacing: 0.3px; margin-bottom: 2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.hd-info p {
+  color: rgba(255,255,255,0.65); font-size: 10.5px;
+  font-family: Arial, sans-serif; letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.hd-actions { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+
+/* Sprogknapper */
+.lang-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 100px;
+  color: rgba(255,255,255,0.85);
+  font-size: 9.5px; font-family: Arial, sans-serif; font-weight: 700;
+  padding: 3px 7px; letter-spacing: 0.5px;
+  transition: var(--t);
+}
+.lang-btn:hover, .lang-btn[aria-pressed="true"] {
+  background: var(--gold); border-color: var(--gold); color: var(--g-dark);
+}
+.chat-x {
+  width: 29px; height: 29px; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.8);
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--t);
+}
+.chat-x:hover { background: rgba(255,255,255,0.22); color: #fff; }
+.chat-x svg { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════════════════
+   ANIMATION 5 – Kategori-kort: zoom + guldeffekt
+═══════════════════════════════════════════════════ */
+.cat-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 7px; padding: 13px 13px 0;
+  flex-shrink: 0;
+}
+.cat-card {
+  background: var(--sand);
+  border: 1.5px solid var(--sand-d);
+  border-radius: 10px;
+  padding: 10px 11px;
+  display: flex; align-items: center; gap: 9px;
+  position: relative; overflow: hidden;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+/* Gold shimmer */
+.cat-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 100%, rgba(200,168,75,0.22) 0%, transparent 65%);
+  opacity: 0; transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.cat-card:hover {
+  transform: translateY(-2px) scale(1.025);
+  border-color: var(--gold);
+  box-shadow: 0 6px 20px rgba(200,168,75,0.22);
+}
+.cat-card:hover::before { opacity: 1; }
+.cat-card:active { transform: scale(0.97); }
+
+.cat-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: var(--g-dark);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.cat-icon svg { width: 17px; height: 17px; }
+.cat-txt .lbl {
+  font-size: 12px; font-weight: 600; color: var(--txt);
+  font-family: Arial, sans-serif; display: block; line-height: 1.25;
+}
+.cat-txt .sub {
+  font-size: 10px; color: var(--txt-m);
+  font-family: Arial, sans-serif; margin-top: 1px;
+}
+
+/* ═══════════════════════════════════════════════════
+   ANIMATION 3 – Golf bold ruller i hul ved kategori-klik
+═══════════════════════════════════════════════════ */
+@keyframes icon-to-hole {
+  0%   { transform: scale(1) translateY(0); opacity: 1; }
+  35%  { transform: scale(1.15) translateY(-5px); }
+  70%  { transform: scale(0.5) translateY(10px); opacity: 0.5; }
+  100% { transform: scale(0) translateY(14px); opacity: 0; }
+}
+@keyframes icon-from-hole {
+  0%   { transform: scale(0) translateY(14px); opacity: 0; }
+  60%  { transform: scale(1.1) translateY(-2px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.cat-card.sinking .cat-icon   { animation: icon-to-hole   0.55s ease-in forwards; }
+.cat-card.rising  .cat-icon   { animation: icon-from-hole 0.4s ease-out forwards; }
+
+/* ═══════════════════════════════════════════════════
+   BESKEDER
+═══════════════════════════════════════════════════ */
+.chat-msgs {
+  flex: 1; overflow-y: auto;
+  padding: 13px 13px 6px;
+  display: flex; flex-direction: column; gap: 9px;
+  scroll-behavior: smooth;
+}
+.chat-msgs::-webkit-scrollbar { width: 3px; }
+.chat-msgs::-webkit-scrollbar-thumb { background: var(--sand-d); border-radius: 3px; }
+
+.msg {
+  max-width: 88%; padding: 10px 13px;
+  border-radius: 15px;
+  font-size: 13.5px; line-height: 1.55;
+  font-family: Arial, sans-serif;
+  animation: msg-pop 0.22s ease forwards;
+}
+@keyframes msg-pop {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.msg.bot {
+  background: var(--sand); color: var(--txt);
+  border-bottom-left-radius: 4px; align-self: flex-start;
+}
+.msg.usr {
+  background: var(--g-dark); color: #fff;
+  border-bottom-right-radius: 4px; align-self: flex-end;
+}
+.msg a { color: var(--gold); font-weight: 600; text-decoration: none; }
+.msg a:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════════════════
+   ANIMATION 4 – 3 golf-bolde som tænke-animation
+═══════════════════════════════════════════════════ */
+.thinking {
+  display: flex; gap: 6px; align-items: center;
+  padding: 11px 14px;
+  background: var(--sand); border-radius: 15px; border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+.t-ball {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--g-dark);
+  /* Gradient = golf ball dimple tekstur antydning */
+  background: radial-gradient(circle at 35% 35%, #3d6b3d, var(--g-dark));
+  animation: ball-bounce 1.3s ease-in-out infinite;
+}
+.t-ball:nth-child(1) { animation-delay: 0s; }
+.t-ball:nth-child(2) { animation-delay: 0.18s; }
+.t-ball:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes ball-bounce {
+  0%,100% { transform: translateY(0) scale(1);    background: radial-gradient(circle at 35% 35%, #3d6b3d, var(--g-dark)); }
+  33%      { transform: translateY(-7px) scale(1.12); background: radial-gradient(circle at 35% 35%, var(--gold-l), var(--gold)); }
+  66%      { transform: translateY(1px) scale(0.94); }
+}
+
+/* ═══════════════════════════════════════════════════
+   INPUT
+═══════════════════════════════════════════════════ */
+.chat-in-wrap {
+  padding: 9px 11px 11px;
+  border-top: 1px solid var(--sand-d);
+  display: flex; gap: 7px; align-items: flex-end;
+  flex-shrink: 0;
+}
+.chat-in {
+  flex: 1;
+  background: var(--sand); border: 1.5px solid var(--sand-d);
+  border-radius: 20px; padding: 9px 13px;
+  font-size: 13.5px; color: var(--txt);
+  outline: none; resize: none;
+  max-height: 80px; overflow-y: auto;
+  transition: border-color 0.2s ease;
+  line-height: 1.4;
+}
+.chat-in:focus { border-color: var(--gold); }
+.chat-in::placeholder { color: rgba(0,0,0,0.33); }
+
+.send-btn {
+  width: 39px; height: 39px; border-radius: 50%;
+  background: var(--g-dark);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.send-btn:hover:not(:disabled) { background: var(--g-light); transform: scale(1.07); }
+.send-btn:active:not(:disabled) { transform: scale(0.94); }
+.send-btn:disabled { opacity: 0.38; }
+.send-btn svg { width: 16px; height: 16px; }
+
+/* ═══════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════ */
+.chat-footer {
+  padding: 5px 12px 9px; text-align: center;
+  font-family: Arial, sans-serif; font-size: 10px;
+  color: rgba(0,0,0,0.28); flex-shrink: 0;
+}
+.chat-footer a { color: var(--g-light); text-decoration: none; }
+.chat-footer a:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════════════════
+   MOBILE
+═══════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  #chat-bubble { bottom: 20px; right: 18px; }
+  .chat-win {
+    width: calc(100vw - 28px);
+    max-height: calc(100dvh - 110px);
+    right: -4px; bottom: 70px;
+  }
+  .chat-btn { width: 58px; height: 58px; }
+}
+
+/* ═══════════════════════════════════════════════════
+   REDUCERET BEVÆGELSE
+═══════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .chat-btn.anim-in,
+  .chat-btn.anim-out        { animation: none; }
+  .chat-dot                 { animation: none; }
+  .pano-slide               { animation: none !important; transition: opacity 0.5s ease; }
+  .cat-card:hover           { transform: none; }
+  .cat-card.sinking .cat-icon,
+  .cat-card.rising  .cat-icon { animation: none; }
+  .t-ball                   { animation: none; opacity: 0.6; }
+  .t-ball:nth-child(2)      { opacity: 0.8; }
+  .t-ball:nth-child(3)      { opacity: 1; }
+  .msg, .chat-win           { transition: opacity 0.15s ease; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     TESTSIDE
+══════════════════════════════════════════════ -->
+<div class="demo-wrap" aria-hidden="true">
+  <div class="demo-emblem">
+    <!-- Golf bold emblem -->
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="24" cy="22" r="16" fill="#1a2e1a"/>
+      <circle cx="18" cy="16" r="2.2" fill="rgba(255,255,255,0.18)"/>
+      <circle cx="25" cy="13" r="1.8" fill="rgba(255,255,255,0.14)"/>
+      <circle cx="30" cy="18" r="2.2" fill="rgba(255,255,255,0.18)"/>
+      <circle cx="16" cy="23" r="1.8" fill="rgba(255,255,255,0.14)"/>
+      <circle cx="23" cy="21" r="2.2" fill="rgba(255,255,255,0.18)"/>
+      <circle cx="30" cy="25" r="1.8" fill="rgba(255,255,255,0.14)"/>
+      <circle cx="20" cy="29" r="2.2" fill="rgba(255,255,255,0.18)"/>
+      <circle cx="28" cy="30" r="1.8" fill="rgba(255,255,255,0.14)"/>
+      <!-- Flag -->
+      <line x1="36" y1="8" x2="36" y2="40" stroke="#c8a84b" stroke-width="2" stroke-linecap="round"/>
+      <path d="M36 8 L44 11.5 L36 15 Z" fill="#c8a84b"/>
+      <ellipse cx="36" cy="40" rx="5" ry="1.5" fill="#c8a84b" opacity="0.4"/>
+    </svg>
+  </div>
+  <h1>EBELTOFT GOLF CLUB</h1>
+  <p class="sub">AI Assistent v1.3 · Cloudflare Workers AI · Testside</p>
+
+  <div class="demo-box">
+    <strong>✓ Testet lokalt uden Cloudflare</strong>
+    <span class="ok">✓</span> Alle 6 animationer (roll-in/out, panorama, ball-til-hul, 3-bolde, kort-zoom, luk)<br>
+    <span class="ok">✓</span> Sprogskift DA / EN / DE<br>
+    <span class="ok">✓</span> FAQ-fallback svar (aktivt nu)<br>
+    <span class="ok">✓</span> Åbn / Luk chatbot<br>
+    <span class="ok">✓</span> Reduceret bevægelse (prefers-reduced-motion)<br>
+    <span class="ok">✓</span> Mobil, tablet, computer
+  </div>
+
+  <div class="demo-box">
+    <strong>⚙ Kræver Cloudflare Workers AI-binding</strong>
+    <span class="req">▸</span> Rigtige AI-svar (Llama 3.2 3B via env.AI)<br>
+    <span class="req">▸</span> Rate limiting (10/min · 50/dag pr. IP)<br>
+    <span class="req">▸</span> Daglig forbrugsbegrænsning → auto-fallback til FAQ<br>
+    <span class="req">▸</span> CORS-begrænsning til ebeltoft-golfclub.dk
+  </div>
+
+  <p class="demo-hint">→ Klik golf-bolden nede til højre for at åbne assistenten</p>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     CHATBOT
+══════════════════════════════════════════════ -->
+<div id="chat-bubble" role="complementary" aria-label="EGC Chat Assistent">
+
+  <!-- Chat vindue -->
+  <div class="chat-win" id="chatWin" role="dialog" aria-modal="true" aria-label="EGC AI Assistent">
+
+    <!-- HEADER med panorama -->
+    <div class="chat-hd" aria-hidden="true">
+      <!-- Panorama slides
+           TIP: Erstat gradient med rigtige EGC-fotos:
+           style="background-image: url('egc-foto-1.jpg')"
+      -->
+      <div class="pano-slide active" id="pano0"
+           style="background: linear-gradient(135deg, #163016 0%, #2a5a2a 45%, #163016 100%);">
+      </div>
+      <div class="pano-slide" id="pano1"
+           style="background: linear-gradient(145deg, #0d2010 0%, #1e4a1e 55%, #0d2010 100%);">
+      </div>
+      <div class="pano-slide" id="pano2"
+           style="background: linear-gradient(125deg, #122012 0%, #264826 60%, #122012 100%);">
+      </div>
+
+      <div class="hd-overlay"></div>
+      <div class="hd-content">
+        <!-- Golf flag avatar -->
+        <div class="hd-av">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <line x1="8" y1="2.5" x2="8" y2="21" stroke="#1a2e1a" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 2.5 L18 6.5 L8 10.5 Z" fill="#1a2e1a"/>
+            <ellipse cx="10" cy="21" rx="5" ry="1.4" fill="#1a2e1a" opacity="0.25"/>
+          </svg>
+        </div>
+        <div class="hd-info">
+          <h4 id="hd-title">EGC Assistent</h4>
+          <p  id="hd-sub">Online – svar med det samme</p>
+        </div>
+        <div class="hd-actions">
+          <button class="lang-btn" onclick="setLang('da')" id="btn-da" aria-pressed="true">DA</button>
+          <button class="lang-btn" onclick="setLang('en')" id="btn-en" aria-pressed="false">EN</button>
+          <button class="lang-btn" onclick="setLang('de')" id="btn-de" aria-pressed="false">DE</button>
+          <button class="chat-x" onclick="closeChat()" aria-label="Luk">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="18" y1="6"  x2="6" y2="18"/>
+              <line x1="6"  y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- KATEGORI KORT -->
+    <div class="cat-grid" id="catGrid">
+
+      <!-- Book tid -->
+      <button class="cat-card" onclick="triggerCat(this,'book')" aria-label="Book tid via GolfBox">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="17" rx="2" stroke="#c8a84b" stroke-width="1.8"/>
+            <line x1="3" y1="9"  x2="21" y2="9"  stroke="#c8a84b" stroke-width="1.8"/>
+            <line x1="8" y1="2"  x2="8"  y2="6"  stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="16" y1="2" x2="16" y2="6"  stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="8"  cy="14" r="1.2" fill="#c8a84b"/>
+            <circle cx="12" cy="14" r="1.2" fill="#c8a84b"/>
+            <circle cx="16" cy="14" r="1.2" fill="#c8a84b"/>
+          </svg>
+        </div>
+        <div class="cat-txt">
+          <span class="lbl" id="lbl-book">Book tid</span>
+          <span class="sub" id="sub-book">GolfBox online</span>
+        </div>
+      </button>
+
+      <!-- Greenfee -->
+      <button class="cat-card" onclick="triggerCat(this,'greenfee')" aria-label="Greenfee priser">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="8.5" stroke="#c8a84b" stroke-width="1.8"/>
+            <path d="M14.5 9C13.8 8.4 12.5 8 11.5 8.5C10.3 9.1 10.1 10.7 11.1 11.5C12 12.2 13.5 12.2 14 13.2C14.4 14.1 13.7 15.2 12.5 15.5C11.5 15.7 10.5 15.3 10 14.7"
+                  stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="12" y1="7"  x2="12" y2="8.5" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="12" y1="15.5" x2="12" y2="17" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="cat-txt">
+          <span class="lbl" id="lbl-greenfee">Greenfee</span>
+          <span class="sub" id="sub-greenfee">Priser og info</span>
+        </div>
+      </button>
+
+      <!-- Banen -->
+      <button class="cat-card" onclick="triggerCat(this,'bane')" aria-label="Om banen">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 19 Q7 11 11 14 Q15 17 19 9" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="17" y1="4" x2="17" y2="13" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M17 4 L22 6.5 L17 9 Z" fill="#c8a84b"/>
+            <circle cx="11" cy="20" r="1.5" fill="#c8a84b" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="cat-txt">
+          <span class="lbl" id="lbl-bane">Banen</span>
+          <span class="sub" id="sub-bane">18 huller, par 72</span>
+        </div>
+      </button>
+
+      <!-- Café To -->
+      <button class="cat-card" onclick="triggerCat(this,'cafe')" aria-label="Café To åbningstider">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 2.5 Q6.5 4.5 8 4.5 Q9.5 4.5 10 2.5" stroke="#c8a84b" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M3.5 7.5 h13 l-1.5 10.5 H5 Z" stroke="#c8a84b" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M16.5 10 h2.2 a2.2 2.2 0 0 1 0 4.4 h-2.2" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="7.5" y1="20" x2="12.5" y2="20" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="cat-txt">
+          <span class="lbl" id="lbl-cafe">Café To</span>
+          <span class="sub" id="sub-cafe">Åbn. & kontakt</span>
+        </div>
+      </button>
+
+    </div><!-- /cat-grid -->
+
+    <!-- BESKEDER -->
+    <div class="chat-msgs" id="chatMsgs" role="log" aria-live="polite" aria-label="Samtale"></div>
+
+    <!-- INPUT -->
+    <div class="chat-in-wrap">
+      <textarea
+        class="chat-in"
+        id="chatIn"
+        rows="1"
+        placeholder="Skriv her..."
+        aria-label="Besked til EGC Assistent"
+        onkeydown="handleKey(event)"
+        oninput="autoResize(this)"
+      ></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendChat()" aria-label="Send besked">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 2 L11 13" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M22 2 L15 22 L11 13 L2 9 Z" fill="#fff"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="chat-footer">
+      Ebeltoft Golf Club ·
+      <a href="tel:71781006">71 78 10 06</a> ·
+      <a href="https://www.golfbox.dk" target="_blank" rel="noopener">GolfBox ↗</a>
+      · Udviklet af <a href="https://nordic-operations.dk" target="_blank" rel="noopener">Nordic Operations</a>
+    </div>
+
+  </div><!-- /chat-win -->
+
+  <!-- GOLF BOLD KNAP -->
+  <button class="chat-btn" id="chatBtn" onclick="toggleChat()" aria-label="Åbn eller luk EGC AI Assistent" aria-expanded="false">
+    <!-- Golf bold med dimpler -->
+    <svg class="chat-btn-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+      <!-- Kugle -->
+      <circle cx="24" cy="24" r="20" fill="#f5f0e8"/>
+      <!-- Dimpler -->
+      <circle cx="17" cy="16" r="2.4" fill="rgba(26,46,26,0.14)"/>
+      <circle cx="25" cy="13" r="2.0" fill="rgba(26,46,26,0.11)"/>
+      <circle cx="31" cy="18" r="2.4" fill="rgba(26,46,26,0.14)"/>
+      <circle cx="14" cy="24" r="2.0" fill="rgba(26,46,26,0.11)"/>
+      <circle cx="22" cy="22" r="2.4" fill="rgba(26,46,26,0.14)"/>
+      <circle cx="30" cy="25" r="2.0" fill="rgba(26,46,26,0.11)"/>
+      <circle cx="17" cy="31" r="2.4" fill="rgba(26,46,26,0.14)"/>
+      <circle cx="26" cy="32" r="2.0" fill="rgba(26,46,26,0.11)"/>
+      <circle cx="33" cy="29" r="2.4" fill="rgba(26,46,26,0.14)"/>
+      <circle cx="20" cy="38" r="2.0" fill="rgba(26,46,26,0.11)"/>
+      <!-- Glans -->
+      <ellipse cx="19" cy="18" rx="5.5" ry="3.2" fill="rgba(255,255,255,0.42)" transform="rotate(-28 19 18)"/>
+    </svg>
+    <div class="chat-dot" aria-hidden="true"></div>
+  </button>
+
+</div><!-- /chat-bubble -->
+
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════ -->
+<script>
+/* ────────────────────────────────────────────────
+   KONFIG
+   ── Skift WORKER_URL til din Cloudflare Worker URL
+──────────────────────────────────────────────── */
+const CFG = {
+  WORKER_URL:    'https://egc-chatbot.YOUR-SUBDOMAIN.workers.dev',
+  PANO_INTERVAL: 8000,   // ms mellem panorama-skift
+  MAX_HISTORY:   10,     // Max beskeder i API-historik
+};
+
+/* ────────────────────────────────────────────────
+   TILSTAND
+──────────────────────────────────────────────── */
+let lang        = 'da';
+let chatOpen    = false;
+let isThinking  = false;
+let chatHistory = [];
+let panoIdx     = 0;
+let panoTimer   = null;
+let welcomed    = false;
+
+/* ────────────────────────────────────────────────
+   TEKSTER (DA / EN / DE)
+──────────────────────────────────────────────── */
+const LANG = {
+  da: {
+    hdTitle: 'EGC Assistent', hdSub: 'Online – svar med det samme',
+    placeholder: 'Skriv her...',
+    welcome: 'Hej! Jeg er Ebeltoft Golf Clubs assistent. Hvad kan jeg hjælpe dig med i dag?',
+    lblBook: 'Book tid',    subBook: 'GolfBox online',
+    lblGreen: 'Greenfee',  subGreen: 'Priser og info',
+    lblBane: 'Banen',      subBane: '18 huller, par 72',
+    lblCafe: 'Café To',    subCafe: 'Åbn. & kontakt',
+    rateLimitMin: 'Du har stillet for mange spørgsmål på kort tid. Vent et minut, og prøv igen.',
+    rateLimitDay: 'Den daglige AI-grænse er nået. Jeg svarer fra vores FAQ i stedet.',
+    aiDown: 'AI-assistenten er midlertidigt utilgængelig. Her er information fra vores FAQ:',
+    catQ: { book: 'Hvordan booker jeg en starttid?', greenfee: 'Hvad koster greenfee?', bane: 'Fortæl mig om banen', cafe: 'Hvornår er Café To åben?' },
+  },
+  en: {
+    hdTitle: 'EGC Assistant', hdSub: 'Online – instant replies',
+    placeholder: 'Type here...',
+    welcome: "Hi! I'm the Ebeltoft Golf Club assistant. How can I help you today?",
+    lblBook: 'Book tee time', subBook: 'Via GolfBox',
+    lblGreen: 'Green fee',   subGreen: 'Prices & info',
+    lblBane: 'The Course',   subBane: '18 holes, par 72',
+    lblCafe: 'Café To',      subCafe: 'Hours & contact',
+    rateLimitMin: 'Too many requests. Please wait a minute and try again.',
+    rateLimitDay: 'Daily AI limit reached. Answering from our FAQ instead.',
+    aiDown: 'AI assistant temporarily unavailable. Here is information from our FAQ:',
+    catQ: { book: 'How do I book a tee time?', greenfee: 'What does green fee cost?', bane: 'Tell me about the course', cafe: 'When is Café To open?' },
+  },
+  de: {
+    hdTitle: 'EGC Assistent', hdSub: 'Online – sofortige Antworten',
+    placeholder: 'Hier tippen...',
+    welcome: 'Hallo! Ich bin der Assistent des Ebeltoft Golf Clubs. Wie kann ich Ihnen helfen?',
+    lblBook: 'Abschlag buchen', subBook: 'Über GolfBox',
+    lblGreen: 'Greenfee',      subGreen: 'Preise & Info',
+    lblBane: 'Der Platz',      subBane: '18 Loch, Par 72',
+    lblCafe: 'Café To',        subCafe: 'Öffnungszeiten',
+    rateLimitMin: 'Zu viele Anfragen. Bitte warten Sie eine Minute.',
+    rateLimitDay: 'Tägliches KI-Limit erreicht. Antwort aus unserem FAQ:',
+    aiDown: 'KI-Assistent vorübergehend nicht verfügbar. Informationen aus unserem FAQ:',
+    catQ: { book: 'Wie buche ich eine Startzeit?', greenfee: 'Was kostet das Greenfee?', bane: 'Erzählen Sie mir vom Platz', cafe: 'Wann ist das Café To geöffnet?' },
+  },
+};
+
+/* ────────────────────────────────────────────────
+   FAQ FALLBACK – KUN verificerede EGC-data
+──────────────────────────────────────────────── */
+const FAQ = {
+  da: {
+    book:     '<strong>Book starttid</strong><br>Book direkte på GolfBox:<br><a href="https://www.golfbox.dk" target="_blank" rel="noopener">www.golfbox.dk ↗</a><br>Søg efter <em>Ebeltoft Golf Club</em>.',
+    greenfee: '<strong>Greenfee – vejledende priser</strong><br>18 hul voksen hverdage: <strong>320 kr.</strong><br>18 hul voksen weekend: <strong>370 kr.</strong><br>Senior (65+): 270 kr. &nbsp;·&nbsp; Junior: 150 kr.<br>Aktuelle priser bekræftes via <a href="tel:71781006">71 78 10 06</a>.',
+    bane:     '<strong>Ebeltoft Golf Club – Banen</strong><br>18 huller &nbsp;·&nbsp; Par 72 &nbsp;·&nbsp; Ca. 5.934 m (hvide tees)<br>Smukt beliggende i Mols Bjerge Nationalpark.<br>HCP max 36 for greenfee-spillere.<br>Par-3 Pay & Play: 75 kr. – intet HCP krævet.',
+    cafe:     '<strong>Café To</strong><br>Hverdage 10–20 &nbsp;·&nbsp; Lørdag 09–21<br>Tlf: <a href="tel:71781006">71 78 10 06</a><br>Email: <a href="mailto:kontakt@cafeto.dk">kontakt@cafeto.dk</a>',
+    default:  'Kontakt Ebeltoft Golf Club direkte:<br>📞 <a href="tel:71781006">71 78 10 06</a><br>✉ <a href="mailto:post@ebeltoft-golfclub.dk">post@ebeltoft-golfclub.dk</a><br>Galgebakken 14, 8400 Ebeltoft',
+  },
+  en: {
+    book:     '<strong>Book a tee time</strong><br>Book directly on GolfBox:<br><a href="https://www.golfbox.dk" target="_blank" rel="noopener">www.golfbox.dk ↗</a><br>Search for <em>Ebeltoft Golf Club</em>.',
+    greenfee: '<strong>Green fee – indicative prices</strong><br>18 holes adult weekday: <strong>DKK 320</strong><br>18 holes adult weekend: <strong>DKK 370</strong><br>Senior (65+): DKK 270 &nbsp;·&nbsp; Junior: DKK 150<br>Confirm current prices: <a href="tel:71781006">+45 71 78 10 06</a>',
+    bane:     '<strong>Ebeltoft Golf Club – The Course</strong><br>18 holes &nbsp;·&nbsp; Par 72 &nbsp;·&nbsp; Approx. 5,934 m<br>Beautiful setting in Mols Bjerge National Park.<br>Handicap max. 36 for green fee players.<br>Par-3 Pay & Play: DKK 75 – no handicap required.',
+    cafe:     '<strong>Café To</strong><br>Weekdays 10–20 &nbsp;·&nbsp; Saturday 09–21<br>Tel: <a href="tel:71781006">+45 71 78 10 06</a><br>Email: <a href="mailto:kontakt@cafeto.dk">kontakt@cafeto.dk</a>',
+    default:  'Contact Ebeltoft Golf Club directly:<br>📞 <a href="tel:71781006">+45 71 78 10 06</a><br>✉ <a href="mailto:post@ebeltoft-golfclub.dk">post@ebeltoft-golfclub.dk</a>',
+  },
+  de: {
+    book:     '<strong>Abschlag buchen</strong><br>Buchen Sie direkt auf GolfBox:<br><a href="https://www.golfbox.dk" target="_blank" rel="noopener">www.golfbox.dk ↗</a><br>Suche: <em>Ebeltoft Golf Club</em>.',
+    greenfee: '<strong>Greenfee – Richtpreise</strong><br>18 Loch Erw. (Mo–Fr): <strong>320 DKK</strong><br>18 Loch Erw. (Wochenende): <strong>370 DKK</strong><br>Senioren (65+): 270 DKK &nbsp;·&nbsp; Junioren: 150 DKK<br>Aktuelle Preise: <a href="tel:71781006">+45 71 78 10 06</a>',
+    bane:     '<strong>Der Golfplatz</strong><br>18 Loch &nbsp;·&nbsp; Par 72 &nbsp;·&nbsp; Ca. 5.934 m (weiße Abschläge)<br>Im Nationalpark Mols Bjerge gelegen.<br>HCP-Anforderung max. 36 für Greenfeespieler.<br>Par-3 Pay & Play: 75 DKK – kein HCP erforderlich.',
+    cafe:     '<strong>Café To</strong><br>Mo–Fr 10–20 &nbsp;·&nbsp; Sa 09–21<br>Tel: <a href="tel:71781006">+45 71 78 10 06</a><br>E-Mail: <a href="mailto:kontakt@cafeto.dk">kontakt@cafeto.dk</a>',
+    default:  'Kontaktieren Sie uns direkt:<br>📞 <a href="tel:71781006">+45 71 78 10 06</a><br>✉ <a href="mailto:post@ebeltoft-golfclub.dk">post@ebeltoft-golfclub.dk</a>',
+  },
+};
+
+/* ────────────────────────────────────────────────
+   PANORAMA (8 sek. skift, blød fade)
+──────────────────────────────────────────────── */
+function rotatePano() {
+  const slides = document.querySelectorAll('.pano-slide');
+  if (slides.length < 2) return;
+  slides[panoIdx].classList.remove('active');
+  panoIdx = (panoIdx + 1) % slides.length;
+  slides[panoIdx].classList.add('active');
+}
+function startPano() {
+  if (panoTimer) return;
+  panoTimer = setInterval(rotatePano, CFG.PANO_INTERVAL);
+}
+function stopPano() { clearInterval(panoTimer); panoTimer = null; }
+
+/* ────────────────────────────────────────────────
+   ÅBEN / LUK
+──────────────────────────────────────────────── */
+function toggleChat() { chatOpen ? closeChat() : openChat(); }
+
+function openChat() {
+  if (chatOpen) return;
+  chatOpen = true;
+  const win = document.getElementById('chatWin');
+  const btn = document.getElementById('chatBtn');
+  win.classList.add('open');
+  btn.setAttribute('aria-expanded', 'true');
+  startPano();
+  if (!welcomed) { addBotMsg(LANG[lang].welcome); welcomed = true; }
+  setTimeout(() => document.getElementById('chatIn').focus(), 350);
+}
+
+function closeChat() {
+  if (!chatOpen) return;
+  chatOpen = false;
+  const win = document.getElementById('chatWin');
+  const btn = document.getElementById('chatBtn');
+  const chatBtnEl = btn.querySelector
+      ? btn : document.querySelector('.chat-btn');
+
+  win.classList.remove('open');
+  btn.setAttribute('aria-expanded', 'false');
+  stopPano();
+
+  /* ANIMATION 6 – bold ruller ud */
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced) {
+    chatBtnEl.classList.add('anim-out');
+    setTimeout(() => chatBtnEl.classList.remove('anim-out'), 520);
+  }
+}
+
+/* ────────────────────────────────────────────────
+   SPROG
+──────────────────────────────────────────────── */
+function setLang(l) {
+  lang = l;
+  ['da','en','de'].forEach(x => {
+    const b = document.getElementById('btn-' + x);
+    b.setAttribute('aria-pressed', x === l ? 'true' : 'false');
+  });
+  const t = LANG[l];
+  document.getElementById('hd-title').textContent = t.hdTitle;
+  document.getElementById('hd-sub').textContent   = t.hdSub;
+  document.getElementById('chatIn').placeholder   = t.placeholder;
+  document.getElementById('lbl-book').textContent    = t.lblBook;
+  document.getElementById('sub-book').textContent    = t.subBook;
+  document.getElementById('lbl-greenfee').textContent = t.lblGreen;
+  document.getElementById('sub-greenfee').textContent = t.subGreen;
+  document.getElementById('lbl-bane').textContent = t.lblBane;
+  document.getElementById('sub-bane').textContent = t.subBane;
+  document.getElementById('lbl-cafe').textContent = t.lblCafe;
+  document.getElementById('sub-cafe').textContent = t.subCafe;
+  document.documentElement.lang = l;
+}
+
+/* ────────────────────────────────────────────────
+   ANIMATION 3 – kategori bold til hul
+──────────────────────────────────────────────── */
+function triggerCat(card, topic) {
+  if (isThinking) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced) {
+    card.classList.add('sinking');
+    setTimeout(() => {
+      card.classList.remove('sinking');
+      card.classList.add('rising');
+      setTimeout(() => card.classList.remove('rising'), 420);
+    }, 580);
+  }
+  const q = LANG[lang].catQ[topic];
+  askQ(q, topic);
+}
+
+/* ────────────────────────────────────────────────
+   SEND CHAT
+──────────────────────────────────────────────── */
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+}
+function autoResize(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = Math.min(ta.scrollHeight, 80) + 'px';
+}
+function sendChat() {
+  const inp = document.getElementById('chatIn');
+  const txt = inp.value.trim();
+  if (!txt || isThinking) return;
+  inp.value = ''; inp.style.height = 'auto';
+  askQ(txt, null);
+}
+
+function askQ(text, faqTopic) {
+  if (isThinking) return;
+  addUserMsg(text);
+  chatHistory.push({ role: 'user', content: text });
+  showThinking();
+  callWorker(text, faqTopic);
+}
+
+/* ────────────────────────────────────────────────
+   WORKER KALD
+──────────────────────────────────────────────── */
+async function callWorker(text, faqTopic) {
+  try {
+    const res = await fetch(CFG.WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: chatHistory.slice(-CFG.MAX_HISTORY),
+        language: lang,
+      }),
+    });
+
+    hideThinking();
+    const data = await res.json().catch(() => null);
+
+    /* Rate limit – pr. minut */
+    if (res.status === 429 && data?.reason === 'minute') {
+      addBotMsg(LANG[lang].rateLimitMin); return;
+    }
+    /* Rate limit – pr. dag (inkl. AI-dags-grænse) */
+    if (res.status === 429 || (data?.faq && data?.reason === 'day')) {
+      prependMsg(LANG[lang].rateLimitDay);
+      showFaq(faqTopic, text); return;
+    }
+    /* AI fejl / utilgængelig */
+    if (!res.ok || data?.error || !data?.reply) {
+      prependMsg(LANG[lang].aiDown);
+      showFaq(faqTopic, text); return;
+    }
+
+    const reply = String(data.reply).trim();
+    addBotMsg(reply);
+    chatHistory.push({ role: 'assistant', content: reply });
+
+  } catch (_) {
+    hideThinking();
+    prependMsg(LANG[lang].aiDown);
+    showFaq(faqTopic, text);
+  }
+}
+
+/* ────────────────────────────────────────────────
+   FAQ FALLBACK
+──────────────────────────────────────────────── */
+function showFaq(topic, originalText) {
+  const f = FAQ[lang];
+  let ans = f.default;
+  if (topic && f[topic]) {
+    ans = f[topic];
+  } else if (originalText) {
+    const lo = originalText.toLowerCase();
+    if (/book|tid|start|tee/.test(lo))                   ans = f.book;
+    else if (/green|fee|pris|cost|koste|preis/.test(lo)) ans = f.greenfee;
+    else if (/bane|hul|par|kurs|platz|course/.test(lo))  ans = f.bane;
+    else if (/caf|kaffe|kaffee|spise|mad|food/.test(lo)) ans = f.cafe;
+  }
+  addBotMsg(ans);
+  chatHistory.push({ role: 'assistant', content: ans });
+}
+
+/* ────────────────────────────────────────────────
+   UI HELPERS
+──────────────────────────────────────────────── */
+function addUserMsg(text) {
+  const msgs = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className = 'msg usr';
+  d.textContent = text;
+  msgs.appendChild(d);
+  scroll();
+}
+
+function addBotMsg(html) {
+  const msgs = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className = 'msg bot';
+  d.innerHTML = html; // FAQ og AI svar – tillader <a> og <strong>
+  msgs.appendChild(d);
+  scroll();
+}
+
+/* Tilføj en lille info-linje oven på næste svar */
+function prependMsg(text) {
+  const msgs = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className = 'msg bot';
+  d.style.cssText = 'font-size:12px;opacity:0.7;padding:7px 11px;';
+  d.textContent = text;
+  msgs.appendChild(d);
+  scroll();
+}
+
+function showThinking() {
+  isThinking = true;
+  document.getElementById('sendBtn').disabled = true;
+  const msgs = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className = 'thinking'; d.id = 'thinking';
+  d.setAttribute('aria-label', 'Skriver...');
+  d.innerHTML = '<div class="t-ball"></div><div class="t-ball"></div><div class="t-ball"></div>';
+  msgs.appendChild(d);
+  scroll();
+}
+function hideThinking() {
+  isThinking = false;
+  document.getElementById('sendBtn').disabled = false;
+  const el = document.getElementById('thinking');
+  if (el) el.remove();
+}
+function scroll() {
+  const m = document.getElementById('chatMsgs');
+  m.scrollTop = m.scrollHeight;
+}
+
+/* ────────────────────────────────────────────────
+   INIT
+──────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  /* ANIMATION 1 – golf bold ruller ind */
+  const bubble = document.getElementById('chat-bubble');
+  const btn    = document.querySelector('.chat-btn');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  bubble.classList.add('ready');
+
+  if (!reduced) {
+    btn.classList.add('anim-in');
+    btn.addEventListener('animationend', () => btn.classList.remove('anim-in'), { once: true });
+  }
+
+  /* ESC lukker chatbot */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && chatOpen) closeChat();
+  });
+
+  /* Sæt startsproget */
+  setLang('da');
+});
+</script>
+</body>
+</html>

@@ -1,10 +1,10 @@
-UPLOADLISTE – LYG-BEGYNDER KOMPLET V5.2 (opdateret 6. nov 2026, med velkomstanimation)
+UPLOADLISTE – LYG-BEGYNDER KOMPLET V5.2 (opdateret 7. nov 2026, med velkomstanimation V6)
 ====================================================================
 DENNE MAPPE (LAES-MIG-IKKE-TIL-UPLOAD) SKAL IKKE UPLOADES.
 
 SKAL UPLOADES NU (kun denne ene fil er ændret siden den version, der ligger på GitHub):
-  index.html   md5 f21d6f70aabeb6c84c475456cac10d3e
-  (indeholder velkomstanimationen; nyt driver- og putterbillede og alt det øvrige lå allerede på GitHub)
+  index.html   md5 d5fb950c22504e434eb79fe7e808b4d3
+  (indeholder velkomstanimation V6 med tekst, 1,9 MB; nyt driver- og putterbillede og alt det øvrige lå allerede på GitHub)
 
 UÆNDRET – skal ikke uploades igen (identisk med GitHub 4. nov):
   lykkehjul.html           md5 0b6f4eb1b967356740816b408c1279d4
